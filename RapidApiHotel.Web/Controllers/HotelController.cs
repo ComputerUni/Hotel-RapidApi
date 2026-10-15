@@ -72,5 +72,27 @@ namespace RapidApiHotel.Web.Controllers
                 return View(result);
             }
         }
+
+        public async Task<IActionResult> Detail(int hotel_id, string arrival_date, string departure_date, int adults, string children_age, int room_qty, string currency_code)
+        {
+            var client = new HttpClient();
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri("https://booking-com15.p.rapidapi.com/api/v1/hotels/getHotelDetails?hotel_id=191605&adults=1&children_age=1%2C17&room_qty=1&units=metric&temperature_unit=c&languagecode=en-us&currency_code=EUR"),
+                Headers =
+            {
+                { "x-rapidapi-key", "" },
+                { "x-rapidapi-host", "booking-com15.p.rapidapi.com" },
+            },
+            };
+            using (var response = await client.SendAsync(request))
+            {
+                response.EnsureSuccessStatusCode();
+                var body = await response.Content.ReadAsStringAsync();
+                Console.WriteLine(body);
+                return View();
+            }
+        }
     }
 }
