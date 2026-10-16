@@ -1,0 +1,73 @@
+﻿@model HotelDetailViewModel
+
+@{
+    var d = Model.data;
+    var raw = d.rawData;
+
+    int stars = raw?.reviewScore >= 9 ? 5 :
+            raw?.reviewScore >= 8 ? 4 :
+            raw?.reviewScore >= 7 ? 3 : 3;
+
+    var scoreWord = raw?.reviewScoreWord switch
+    {
+        "Good" => "İyi",
+        "Very Good" => "Çok İyi",
+        "Fabulous" => "Harika",
+        "Superb" => "Mükemmel",
+        "Exceptional" => "Olağanüstü",
+        "Pleasant" => "Hoş",
+        "Fair" => "Orta",
+        _ => raw?.reviewScoreWord
+    };
+}
+
+
+<section class="max-w-[1320px] w-full mx-auto px-margin md:px-margin-tablet lg:px-margin-desktop pt-space-xl pb-space-lg">
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm mb-space-md">
+        <nav class="flex items-center gap-space-2xs text-muted-stone font-label-caps text-label-caps tracking-widest uppercase">
+            <a class="hover:text-slate-ink transition-colors" href="/Hotel/Index">Ana Sayfa</a>
+            <span>/</span>
+            <a class="hover:text-slate-ink transition-colors" href="javascript:history.back()">Oteller</a>
+            <span>/</span>
+            <a class="hover:text-slate-ink transition-colors" href="#">@d.city</a>
+            <span>/</span>
+            <span class="text-slate-ink font-semibold">@d.hotel_name</span>
+        </nav>
+        <div class="flex items-center gap-space-xs self-start md:self-auto">
+            <button onclick="navigator.clipboard.writeText(window.location.href); alert('Link kopyalandı!');"
+                    class="group flex items-center gap-space-2xs px-space-sm py-space-xs rounded-full bg-pure-white shadow-sm hover:shadow-md transition-all text-slate-ink font-label-md text-label-md" type="button">
+                <span class="material-symbols-outlined text-[18px] text-muted-stone">share</span>
+                <span>Paylaş</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-lg">
+        <div class="max-w-3xl">
+            <div class="flex flex-wrap items-center gap-space-xs mb-space-2xs">
+                <span class="px-space-xs py-[2px] rounded bg-amber-gold/15 text-amber-gold font-label-caps text-label-caps uppercase tracking-wider">@d.accommodation_type_name</span>
+                <div class="flex items-center gap-1 text-amber-gold">
+                    @for (int i = 0; i < stars; i++)
+                    {
+                        <span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                    }
+                </div>
+            </div>
+            <h1 class="font-headline-xl text-headline-xl text-slate-ink tracking-tight mb-space-2xs">@d.hotel_name</h1>
+            <div class="flex items-center gap-space-xs text-muted-stone font-body-sm text-body-sm flex-wrap">
+                <span class="material-symbols-outlined text-[18px] text-terracotta">location_on</span>
+                <span>@d.address, @d.city, @d.country_trans</span>
+                <a class="text-terracotta font-label-md text-label-md underline underline-offset-4 hover:text-slate-ink transition-colors" href="#konum-harita">Haritada Göster</a>
+            </div>
+        </div>
+        <div class="flex items-center gap-space-md p-space-sm bg-pure-white rounded-xl shadow-sm self-start lg:self-auto">
+            <div class="text-right">
+                <div class="font-label-lg text-label-lg text-slate-ink font-bold">@scoreWord</div>
+                <div class="font-body-sm text-body-sm text-muted-stone">@raw?.reviewCount doğrulanmış yorum</div>
+            </div>
+            <div class="w-12 h-12 rounded-[12px_12px_12px_3px] bg-slate-ink text-pure-white font-headline-sm text-headline-sm flex items-center justify-center font-bold tracking-tight shadow-md">
+                @raw?.reviewScore.ToString("0.0")
+            </div>
+        </div>
+    </div>
+</section>

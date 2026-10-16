@@ -5,9 +5,14 @@ namespace RapidApiHotel.Web.Models
     public class HotelDetailViewModel
     {
         public bool status { get; set; }
-        public string message { get; set; }
+        public object message { get; set; }
         public long timestamp { get; set; }
         public Data data { get; set; }
+
+        public HotelRoomListWithAvailabilityViewModel roomList { get; set; }
+        public HotelReviewScoresViewModel hotelReviewScores { get; set; }
+        public HotelReviewTipsViewModel hotelReviewTips { get; set; }
+        public HotelDetailDescriptionAndInfoViewModel hotelDescriptionAndInfo { get; set; }
 
         public class Data
         {
@@ -37,7 +42,7 @@ namespace RapidApiHotel.Web.Models
             public List<Top_Ufi_Benefits> top_ufi_benefits { get; set; }
             public Wifi_Review_Score wifi_review_score { get; set; }
             public List<Block> block { get; set; }
-            public List<Rawdata> rawData { get; set; }
+            public Rawdata rawData { get; set; }
         }
 
         public class Product_Price_Breakdown

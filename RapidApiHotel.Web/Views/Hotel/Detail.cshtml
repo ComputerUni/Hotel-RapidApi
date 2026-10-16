@@ -1,0 +1,604 @@
+﻿@model RapidApiHotel.Web.Models.HotelDetailViewModel
+@using RapidApiHotel.Web.Models
+
+@{
+    var d = Model.data;
+    var raw = d.rawData;
+    var price = d.product_price_breakdown;
+
+    int stars = raw?.reviewScore >= 9 ? 5 :
+                raw?.reviewScore >= 8 ? 4 :
+                raw?.reviewScore >= 7 ? 3 : 3;
+
+    var scoreWord = raw?.reviewScoreWord switch
+    {
+        "Good" => "İyi",
+        "Very Good" => "Çok İyi",
+        "Fabulous" => "Harika",
+        "Superb" => "Mükemmel",
+        "Exceptional" => "Olağanüstü",
+        "Pleasant" => "Hoş",
+        "Fair" => "Orta",
+        _ => raw?.reviewScoreWord
+    };
+
+
+    var reviews = Model.hotelReviewTips?.data?.result?
+         .Where(r => !string.IsNullOrWhiteSpace(r.pros_translated) ||
+                     !string.IsNullOrWhiteSpace(r.pros) ||
+                     !string.IsNullOrWhiteSpace(r.cons_translated) ||
+                     !string.IsNullOrWhiteSpace(r.cons) ||
+                     !string.IsNullOrWhiteSpace(r.title_translated) ||
+                     !string.IsNullOrWhiteSpace(r.title))
+         .Take(4)
+         .ToList() ?? new();
+
+    var countryCode = Model.hotelReviewTips.data.result.FirstOrDefault().author.countrycode.ToLowerInvariant();
+
+    var countryName = countryCode switch
+    {
+        "tr" => "Türkiye",
+        "gb" => "Birleşik Krallık",
+        "de" => "Almanya",
+        "us" => "ABD",
+        "ru" => "Rusya",
+        "az" => "Azerbaycan",
+        "ge" => "Gürcistan",
+        _ => countryCode.ToUpper() ?? ""
+    };
+    var language = countryCode switch
+    {
+        "tr" => "Türkçe",
+        "gb" => "İngilizce",
+        "en" => "İngilizce",
+        "de" => "Almanca",
+        "us" => "İngilizce",
+        "en-gb" => "İngilizce",
+        "ru" => "Rusça",
+        "az" => "Azerice"
+    };
+
+
+    var rooms = Model.roomList?.available ?? new List<HotelRoomListWithAvailabilityViewModel.Available>();
+    var scoreBreakdown = Model.hotelReviewScores?.data?.FirstOrDefault()?.score_breakdown?.FirstOrDefault();
+    var questions = scoreBreakdown?.question?.Where(x => x.score != null).Take(4).ToList() ?? new();
+
+    var hotelDesc = Model.hotelDescriptionAndInfo.data.FirstOrDefault(x => x.languagecode == "tr")?.description ?? Model.hotelDescriptionAndInfo?.data?.FirstOrDefault()?.description;
+
+    var inv = System.Globalization.CultureInfo.InvariantCulture;
+    var mapLat = d.latitude.ToString("0.000000", inv);
+    var mapLng = d.longitude.ToString("0.000000", inv);
+
+
+    var photos = raw?.photoUrls?.Select(p => p.Replace("square60", "max1280").Replace("max300", "max1280")).ToArray() ?? Array.Empty<string>();
+    var totalPhotos = photos.Length;
+    var mainPhoto = totalPhotos > 0 ? photos[0] : "";
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+    <style>
+            @@layer base {
+                html, body {
+                    margin: 0;
+                    padding: 0;
+                }
+
+                body {
+                    overscroll-behavior: none;
+                }
+            }
+
+            ::-webkit-scrollbar {
+                display: none;
+            }
+    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "tertiary-container": "#2f1500", "on-secondary-container": "#6a2500", "error": "#ba1a1a", "on-error": "#ffffff", "on-tertiary-container": "#c76c00", "on-primary": "#ffffff", "inverse-primary": "#c1c6d9", "soft-success": "#1E8A5A", "inverse-on-surface": "#f2f1ee", "secondary-container": "#fd844c", "on-secondary-fixed-variant": "#7d2d00", "on-surface": "#1a1c1a", "surface-variant": "#e3e2df", "pure-white": "#FFFFFF", "muted-stone": "#6E7582", "on-tertiary-fixed-variant": "#6e3900", "primary-fixed-dim": "#c1c6d9", "surface-container-lowest": "#ffffff", "primary-fixed": "#dde2f6", "surface-container-low": "#f4f3f0", "sand-surface": "#EFECE6", "surface-dim": "#dbdad7", "terracotta": "#C05621", "secondary": "#a14009", "slate-ink": "#121826", "surface": "#faf9f6", "tertiary-fixed": "#ffdcc3", "tertiary-fixed-dim": "#ffb77d", "outline": "#76777d", "on-background": "#1a1c1a", "on-tertiary": "#ffffff", "surface-container-highest": "#e3e2df", "primary": "#000000", "on-primary-fixed-variant": "#414756", "on-surface-variant": "#45464c", "on-secondary": "#ffffff", "on-primary-container": "#7e8395", "on-primary-fixed": "#151b29", "secondary-fixed": "#ffdbcd", "error-container": "#ffdad6", "soft-success-bg": "#EBF6F0", "surface-container": "#efeeeb", "background": "#faf9f6", "on-error-container": "#93000a", "outline-variant": "#c6c6cc", "sand-border": "#E4DFD5", "tertiary": "#000000", "inverse-surface": "#2f312f", "amber-gold": "#D97706", "slate-card": "#1E2538", "surface-tint": "#585e6f", "surface-container-high": "#e9e8e5", "secondary-fixed-dim": "#ffb596", "sand-canvas": "#F8F7F4", "primary-container": "#151b29", "surface-bright": "#faf9f6", "on-tertiary-fixed": "#2f1500", "on-secondary-fixed": "#360f00" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-2xl": "3rem", "space-3xl": "4.5rem", "gutter": "1.5rem", "space-2xs": "0.25rem", "margin-tablet": "2.5rem", "space-xs": "0.5rem", "space-lg": "1.5rem", "space-xl": "2rem", "space-4xl": "6rem", "space-md": "1rem", "margin": "1.25rem", "space-sm": "0.75rem", "margin-desktop": "4rem", "gutter-desktop": "2rem" }, "fontFamily": { "body-sm": ["Plus Jakarta Sans"], "price-hero": ["Plus Jakarta Sans"], "body-lead": ["Plus Jakarta Sans"], "headline-lg": ["Playfair Display"], "display-hero": ["Playfair Display"], "label-caps": ["Plus Jakarta Sans"], "headline-xl": ["Playfair Display"], "body-default": ["Plus Jakarta Sans"], "headline-xl-mobile": ["Playfair Display"], "label-md": ["Plus Jakarta Sans"], "display-hero-mobile": ["Playfair Display"], "headline-md": ["Playfair Display"], "headline-sm": ["Plus Jakarta Sans"], "label-lg": ["Plus Jakarta Sans"] }, "fontSize": { "body-sm": ["0.875rem", { "lineHeight": "1.375rem", "fontWeight": "400" }], "price-hero": ["1.75rem", { "lineHeight": "2rem", "letterSpacing": "-0.03em", "fontWeight": "800" }], "body-lead": ["1.125rem", { "lineHeight": "1.875rem", "fontWeight": "400" }], "headline-lg": ["1.625rem", { "lineHeight": "2.125rem", "letterSpacing": "-0.02em", "fontWeight": "600" }], "display-hero": ["3.25rem", { "lineHeight": "3.75rem", "letterSpacing": "-0.03em", "fontWeight": "600" }], "label-caps": ["0.6875rem", { "lineHeight": "1rem", "letterSpacing": "0.08em", "fontWeight": "700" }], "headline-xl": ["2.25rem", { "lineHeight": "2.75rem", "letterSpacing": "-0.025em", "fontWeight": "600" }], "body-default": ["1rem", { "lineHeight": "1.625rem", "fontWeight": "400" }], "headline-xl-mobile": ["1.75rem", { "lineHeight": "2.25rem", "letterSpacing": "-0.02em", "fontWeight": "600" }], "label-md": ["0.8125rem", { "lineHeight": "1.125rem", "fontWeight": "600" }], "display-hero-mobile": ["2.25rem", { "lineHeight": "2.75rem", "letterSpacing": "-0.02em", "fontWeight": "600" }], "headline-md": ["1.25rem", { "lineHeight": "1.75rem", "letterSpacing": "-0.015em", "fontWeight": "600" }], "headline-sm": ["1.125rem", { "lineHeight": "1.5rem", "letterSpacing": "-0.01em", "fontWeight": "700" }], "label-lg": ["0.9375rem", { "lineHeight": "1.25rem", "fontWeight": "600" }] } } } };</script>
+</head>
+<body class="bg-surface font-body-default text-on-surface antialiased">
+
+    <header class="fixed top-0 left-0 w-full z-50 bg-surface/90 backdrop-blur-xl shadow-[0_2px_12px_rgba(18,24,38,0.04)]">
+        <div class="h-20 max-w-[1320px] mx-auto px-margin md:px-margin-tablet lg:px-margin-desktop flex items-center justify-between">
+            <a asp-action="Index" asp-controller="Hotel" class="flex items-center gap-space-xs">
+                <span class="font-headline-md text-headline-md tracking-tight text-slate-ink">StayFinder</span>
+            </a>
+        </div>
+    </header>
+
+    <main class="w-full pt-20 bg-surface min-h-[calc(100vh-20rem)]">
+        <div class="flex flex-col w-full">
+
+            @await Component.InvokeAsync("_HotelDetailHeader", new { data = d })
+
+            <section class="max-w-[1320px] w-full mx-auto px-margin md:px-margin-tablet lg:px-margin-desktop mb-space-2xl">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xs rounded-2xl overflow-hidden bg-sand-surface p-space-xs shadow-md">
+
+                    <div class="@(totalPhotos > 1 ? "lg:col-span-7" : "lg:col-span-12") relative h-[340px] sm:h-[460px] lg:h-[520px] rounded-xl overflow-hidden group">
+                        <img class="w-full h-full object-cover transform group-hover:scale-[1.02] transition-transform duration-700 ease-out"
+                             alt="@d.hotel_name" src="@mainPhoto" />
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-ink/70 via-transparent to-transparent opacity-80 pointer-events-none"></div>
+                        <div class="absolute bottom-space-lg left-space-lg right-space-lg text-pure-white flex items-end justify-between">
+                            <div>
+                                <span class="inline-block px-space-xs py-[2px] rounded-full bg-pure-white/20 backdrop-blur-md font-label-caps text-label-caps uppercase tracking-wider mb-space-2xs text-pure-white">@d.accommodation_type_name</span>
+                                <h3 class="font-headline-md text-headline-md text-pure-white drop-shadow-sm">@d.hotel_name — @d.city, @d.country_trans</h3>
+                            </div>
+                            <div class="hidden sm:flex items-center gap-space-2xs px-space-sm py-space-xs rounded-full bg-slate-ink/80 backdrop-blur-md text-pure-white font-label-caps text-label-caps">
+                                <span class="material-symbols-outlined text-[16px] text-amber-gold">verified</span>
+                                <span>@d.city Seçkisi</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (totalPhotos > 1)
+                    {
+                        <div class="lg:col-span-5 grid grid-cols-2 gap-space-xs h-[340px] sm:h-[460px] lg:h-[520px]">
+                            @for (int i = 1; i <= 3 && i < totalPhotos; i++)
+                            {
+                                <div class="relative rounded-xl overflow-hidden group h-full">
+                                    <img class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+                                         alt="@d.hotel_name @i" src="@photos[i]" />
+                                </div>
+                            }
+
+                            @if (totalPhotos > 4)
+                            {
+                                <div class="relative rounded-xl overflow-hidden group h-full cursor-pointer">
+                                    <img class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+                                         alt="@d.hotel_name" src="@photos[4]" />
+                                    <div class="absolute inset-0 bg-slate-ink/60 group-hover:bg-slate-ink/75 transition-colors flex flex-col items-center justify-center text-pure-white">
+                                        <span class="material-symbols-outlined text-[28px] mb-space-2xs text-amber-gold">photo_library</span>
+                                        <span class="font-headline-sm text-headline-sm font-semibold">+@(totalPhotos - 4) Fotoğraf</span>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            </section>
+
+            <div class="sticky top-20 z-40 bg-sand-canvas/95 backdrop-blur-md py-space-xs mb-space-xl shadow-sm">
+                <div class="max-w-[1320px] mx-auto px-margin md:px-margin-tablet lg:px-margin-desktop flex items-center justify-between overflow-x-auto gap-space-lg">
+                    <div class="flex items-center gap-space-md whitespace-nowrap font-label-md text-label-md">
+                        <a class="px-space-sm py-space-xs rounded-full bg-slate-ink text-pure-white" href="#genel-bakis">Genel Bakış</a>
+                        <a class="px-space-sm py-space-xs rounded-full text-slate-ink hover:bg-pure-white transition-colors" href="#ayricaliklar">Ayrıcalıklar</a>
+                        <a class="px-space-sm py-space-xs rounded-full text-slate-ink hover:bg-pure-white transition-colors" href="#musait-odalar">Müsait Odalar</a>
+                        <a class="px-space-sm py-space-xs rounded-full text-slate-ink hover:bg-pure-white transition-colors" href="#konum-harita">Konum Rehberi</a>
+                        <a class="px-space-sm py-space-xs rounded-full text-slate-ink hover:bg-pure-white transition-colors" href="#misafir-yorumlari">Değerlendirmeler</a>
+                    </div>
+                    <div class="hidden xl:flex items-center gap-space-sm">
+                        <div class="text-right">
+                            <span class="font-label-caps text-label-caps text-muted-stone block">Gecelik Başlayan</span>
+                            <span class="font-headline-sm text-headline-sm text-slate-ink font-bold">@price?.gross_amount_per_night?.amount_rounded @price?.gross_amount_per_night?.currency</span>
+                        </div>
+                        <a class="px-space-md py-space-xs rounded-lg bg-terracotta text-pure-white font-label-md text-label-md hover:bg-slate-ink transition-colors shadow-sm" href="#musait-odalar">Oda Seç</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="max-w-[1320px] w-full mx-auto px-margin md:px-margin-tablet lg:px-margin-desktop mb-space-4xl">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-start">
+
+                    <div class="lg:col-span-8 flex flex-col gap-space-3xl min-w-0">
+
+                        <section class="scroll-mt-32" id="genel-bakis">
+                            <div class="flex items-center gap-space-xs mb-space-xs">
+                                <span class="w-8 h-[2px] bg-terracotta"></span>
+                                <span class="font-label-caps text-label-caps text-terracotta uppercase tracking-wider">Genel Bilgiler</span>
+                            </div>
+                            <h2 class="font-headline-lg text-headline-lg text-slate-ink mb-space-md">@d.hotel_name Hakkında</h2>
+                            <div class="font-body-default text-body-default text-muted-stone space-y-space-md mb-space-lg leading-relaxed">
+                                <p>
+                                    <strong class="text-slate-ink">@d.hotel_name</strong>, @d.city, @d.country_trans konumunda yer alan bir <strong>@d.accommodation_type_name</strong>.
+                                    Şehir merkezine <strong>@d.distance_to_cc.ToString("0.0") km</strong> uzaklıktadır.
+                                </p>
+                                <p>
+                                    Giriş saati: <strong>@raw?.checkin?.fromTime — @raw?.checkin?.untilTime</strong> ·
+                                    Çıkış saati: <strong>@raw?.checkout?.fromTime — @raw?.checkout?.untilTime</strong>
+                                </p>
+                                @if (d.hotel_include_breakfast == 1)
+                                {
+                                    <p>✓ Kahvaltı fiyata dahildir.</p>
+                                }
+                                @if (d.is_family_friendly == 1)
+                                {
+                                    <p>✓ Aile dostu tesis.</p>
+                                }
+                                @if (d.spoken_languages?.Any() == true)
+                                {
+                                    <p>Konuşulan diller: <strong>@string.Join(", ", language)</strong></p>
+                                }
+                            </div>
+
+                            @if (!string.IsNullOrWhiteSpace(hotelDesc))
+                            {
+                                <div class="font-body-default text-body-default text-slate-ink/80 space-y-space-sm mb-space-lg leading-relaxed whitespace-pre-line">
+                                    @Html.Raw(hotelDesc)
+                                </div>
+                            }
+
+                            @if (d.top_ufi_benefits?.Any() == true)
+                            {
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-space-sm">
+                                    @foreach (var benefit in d.top_ufi_benefits.Take(3))
+                                    {
+
+                                        var iconName = benefit.icon?.ToLowerInvariant() switch
+                                        {
+                                            "fitness" => "fitness_center",
+                                            "nosmoking" => "smoke_free",
+                                            "clean" => "room_service",
+                                            "disabled" => "accessible",
+                                            "food_and_drink" => "restaurant",
+                                            "family" => "family_restroom",
+                                            "shuttle" => "airport_shuttle",
+                                            _ => benefit.icon ?? "check_circle"
+                                        };
+
+                                        <div class="p-space-md rounded-xl bg-pure-white shadow-sm flex items-start gap-space-sm">
+                                            <span class="material-symbols-outlined text-terracotta text-[24px]">@iconName</span>
+                                            <div>
+                                                <h4 class="font-label-lg text-label-lg text-slate-ink">@benefit.translated_name</h4>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                        </section>
+
+                        <section class="scroll-mt-32 p-space-xl bg-sand-surface rounded-2xl" id="ayricaliklar">
+                            <div class="flex items-center justify-between mb-space-lg flex-wrap gap-space-xs">
+                                <div>
+                                    <span class="font-label-caps text-label-caps text-terracotta uppercase tracking-wider block mb-space-2xs">Konfor Donanımları</span>
+                                    <h3 class="font-headline-md text-headline-md text-slate-ink">Öne Çıkan Ayrıcalıklar &amp; Olanaklar</h3>
+                                </div>
+                                <span class="font-label-caps text-label-caps text-muted-stone">Tümü Tesis Tarafından Doğrulanmıştır</span>
+                            </div>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-space-md">
+                                @foreach (var facility in d.facilities_block?.facilities ?? new())
+                                {
+                                    var iconName = facility.icon?.ToLowerInvariant() switch
+                                    {
+                                        "fitness" => "fitness_center",
+                                        "nosmoking" => "smoke_free",
+                                        "clean" => "room_service",
+                                        "disabled" => "accessible",
+                                        "food_and_drink" => "restaurant",
+                                        "family" => "family_restroom",
+                                        "shuttle" => "airport_shuttle",
+                                        _ => facility.icon ?? "check_circle"
+                                    };
+
+                                    <div class="flex items-center gap-space-sm p-space-sm bg-pure-white rounded-lg shadow-sm">
+                                        <span class="material-symbols-outlined text-slate-ink text-[22px]">@iconName</span>
+                                        <div class="font-label-md text-label-md text-slate-ink">@facility.name</div>
+                                    </div>
+                                }
+                            </div>
+                        </section>
+
+                        <section class="scroll-mt-32" id="musait-odalar">
+                            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-space-sm mb-space-lg">
+                                <div>
+                                    <span class="font-label-caps text-label-caps text-terracotta uppercase tracking-wider block mb-space-2xs">Rezervasyon Seçenekleri</span>
+                                    <h2 class="font-headline-lg text-headline-lg text-slate-ink">Müsait Oda Tipleri</h2>
+                                </div>
+                                @if (rooms.Any())
+                                {
+                                    <div class="flex items-center gap-space-xs text-soft-success font-label-caps text-label-caps">
+                                        <span class="w-2 h-2 rounded-full bg-soft-success animate-pulse"></span>
+                                        <span>@d.arrival_date — @d.departure_date için @rooms.Count Oda Seçeneği Mevcut</span>
+                                    </div>
+                                }
+                            </div>
+                            <div class="space-y-space-lg">
+                                @for (int i = 0; i < rooms.Count; i++)
+                                {
+                                    var room = rooms[i];
+                                    bool isRecommended = i == 0;
+                                    <div class="relative bg-pure-white rounded-2xl p-space-md sm:p-space-lg @(isRecommended ? "shadow-md ring-2 ring-terracotta" : "shadow-sm hover:shadow-md transition-shadow")">
+                                        @if (isRecommended)
+                                        {
+                                            <div class="absolute -top-3 left-6 px-space-sm py-1 rounded-full bg-terracotta text-pure-white font-label-caps text-label-caps tracking-wider uppercase shadow-sm flex items-center gap-1">
+                                                <span class="material-symbols-outlined text-[14px]">star</span>
+                                                <span>En Çok Tercih Edilen Seçenek</span>
+                                            </div>
+                                        }
+                                        <div class="grid grid-cols-1 md:grid-cols-12 gap-space-md @(isRecommended ? "mt-2" : "")">
+                                            <div class="md:col-span-4 relative rounded-xl overflow-hidden min-h-[200px] bg-sand-surface flex items-center justify-center">
+                                                @if (room.block_text?.policies?.Any() == true)
+                                                {
+                                                    <span class="material-symbols-outlined text-[48px] text-muted-stone">hotel</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="material-symbols-outlined text-[48px] text-muted-stone">hotel</span>
+                                                }
+                                                <span class="absolute top-2 left-2 px-space-xs py-1 rounded bg-slate-ink/80 text-pure-white font-label-caps text-[0.625rem]">@room.room_surface_in_m2 m²</span>
+                                            </div>
+                                            <div class="md:col-span-5 flex flex-col justify-between">
+                                                <div>
+                                                    <h3 class="font-headline-sm text-headline-sm text-slate-ink mb-1">@room.room_name</h3>
+                                                    <div class="flex flex-wrap items-center gap-space-2xs text-muted-stone font-body-sm text-body-sm mb-space-sm">
+                                                        <span class="flex items-center gap-1">
+                                                            <span class="material-symbols-outlined text-[16px]">group</span>
+                                                            @room.nr_adults Yetişkin
+                                                            @if (room.nr_children > 0)
+                                                            {
+                                                                <text>, @room.nr_children Çocuk</text>
+                                                            }
+                                                        </span>
+                                                        <span>·</span>
+                                                        <span class="flex items-center gap-1">
+                                                            <span class="material-symbols-outlined text-[16px]">straighten</span>
+                                                            @room.room_surface_in_m2 m²
+                                                        </span>
+                                                    </div>
+                                                    <div class="space-y-1">
+                                                        @if (room.breakfast_included == 1)
+                                                        {
+                                                            <div class="flex items-center gap-space-xs text-soft-success font-body-sm text-body-sm font-medium">
+                                                                <span class="material-symbols-outlined text-[18px]">done</span>
+                                                                <span>Kahvaltı Dahil</span>
+                                                            </div>
+                                                        }
+                                                        @if (room.refundable == 1)
+                                                        {
+                                                            <div class="flex items-center gap-space-xs text-soft-success font-body-sm text-body-sm font-medium">
+                                                                <span class="material-symbols-outlined text-[18px]">verified</span>
+                                                                <span>Ücretsiz İptal — @room.refundable_until</span>
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="flex items-center gap-space-xs text-muted-stone font-body-sm text-body-sm">
+                                                                <span class="material-symbols-outlined text-[16px]">event_busy</span>
+                                                                <span>@(room.paymentterms?.cancellation?.type_translation ?? "İade Edilmez Tarife")</span>
+                                                            </div>
+                                                        }
+                                                        @if (room.paymentterms?.prepayment != null)
+                                                        {
+                                                            <div class="flex items-center gap-space-xs text-muted-stone font-body-sm text-body-sm">
+                                                                <span class="material-symbols-outlined text-[16px] text-terracotta">credit_card_off</span>
+                                                                <span>@room.paymentterms.prepayment.type_translation</span>
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                                @if (room.mealplan != null)
+                                                {
+                                                    <div class="mt-space-md pt-space-xs">
+                                                        <span class="px-space-xs py-1 rounded bg-sand-surface text-slate-ink font-label-caps text-label-caps">@room.mealplan</span>
+                                                    </div>
+                                                }
+                                            </div>
+                                            <div class="md:col-span-3 flex flex-col justify-between md:items-end md:text-right pt-space-sm md:pt-0">
+                                                <div>
+                                                    <div class="font-label-caps text-label-caps text-muted-stone">@room.nr_adults Yetişkin @(room.nr_children > 0 ? $"+ {room.nr_children} Çocuk" : "")</div>
+                                                    <div class="font-headline-lg text-headline-lg @(isRecommended ? "text-terracotta" : "text-slate-ink") font-bold mt-1">
+                                                        @room.product_price_breakdown?.gross_amount?.amount_rounded @room.product_price_breakdown?.gross_amount?.currency
+                                                    </div>
+                                                    <div class="font-body-sm text-body-sm text-muted-stone">Vergiler &amp; Harçlar Dahil</div>
+                                                </div>
+                                                <button class="w-full md:w-auto mt-space-md px-space-lg py-space-sm rounded-lg @(isRecommended ? "bg-terracotta hover:bg-slate-ink text-pure-white shadow-sm" : "bg-sand-surface hover:bg-slate-ink text-slate-ink hover:text-pure-white") font-label-md text-label-md transition-colors" type="button">
+                                                    @(isRecommended ? "Bu Odayı Seç" : "Odayı Seç")
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </section>
+
+                        <section class="scroll-mt-32" id="konum-harita">
+                            <div class="flex items-center gap-space-xs mb-space-xs">
+                                <span class="w-8 h-[2px] bg-terracotta"></span>
+                                <span class="font-label-caps text-label-caps text-terracotta uppercase tracking-wider">Şehir Rehberi &amp; Konum</span>
+                            </div>
+                            <h2 class="font-headline-lg text-headline-lg text-slate-ink mb-space-md">@d.city'de, Her Yere Yakın</h2>
+
+                            <div class="relative w-full h-[360px] rounded-2xl overflow-hidden shadow-sm mb-space-lg border border-sand-border">
+                                <iframe src="https://maps.google.com/maps?q=@(mapLat),@(mapLng)&hl=tr&z=15&output=embed"
+                                        class="w-full h-full border-0" allowfullscreen loading="lazy"></iframe>
+
+                                <div class="absolute bottom-space-md left-space-md p-space-md bg-pure-white/95 backdrop-blur-md rounded-xl shadow-md max-w-xs pointer-events-none">
+                                    <div class="flex items-center gap-space-xs mb-1">
+                                        <span class="w-2.5 h-2.5 rounded-full bg-terracotta animate-ping"></span>
+                                        <span class="font-headline-sm text-headline-sm text-slate-ink font-bold">@d.hotel_name</span>
+                                    </div>
+                                    <p class="font-body-sm text-body-sm text-muted-stone mb-space-xs line-clamp-2">@d.address</p>
+                                    <div class="text-terracotta font-label-caps text-label-caps flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[14px]">directions_walk</span>
+                                        <span>Merkeze @d.distance_to_cc.ToString("0.0") km</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="scroll-mt-32" id="misafir-yorumlari">
+                            <div class="flex items-center justify-between mb-space-lg flex-wrap gap-space-xs">
+                                <div>
+                                    <span class="font-label-caps text-label-caps text-terracotta uppercase tracking-wider block mb-space-2xs">Doğrulanmış Deneyimler</span>
+                                    <h2 class="font-headline-lg text-headline-lg text-slate-ink">Misafir Değerlendirmeleri</h2>
+                                </div>
+                                <div class="flex items-center gap-space-xs">
+                                    <span class="font-label-caps text-label-caps text-muted-stone">Toplam:</span>
+                                    <span class="font-headline-sm text-headline-sm text-slate-ink font-bold">@d.review_nr Yorum</span>
+                                </div>
+                            </div>
+
+                            @if (questions.Any())
+                            {
+                                <div class="p-space-xl bg-pure-white rounded-2xl shadow-sm mb-space-lg">
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-space-xl gap-y-space-md">
+                                        @foreach (var q in questions)
+                                        {
+                                            float scoreVal = 0;
+                                            float.TryParse(q.score?.ToString(), out scoreVal);
+                                            <div>
+                                                <div class="flex justify-between items-center mb-1 font-label-md text-label-md">
+                                                    <span class="text-slate-ink">@q.localized_question</span>
+                                                    <span class="text-slate-ink font-bold">@scoreVal.ToString("0.0")</span>
+                                                </div>
+                                                <div class="w-full h-2 rounded-full bg-sand-surface overflow-hidden">
+                                                    <div class="h-full bg-terracotta rounded-full" style="width: @((scoreVal * 10).ToString("0", System.Globalization.CultureInfo.InvariantCulture))%;"></div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                            @if (reviews.Any())
+                            {
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+                                    @foreach (var review in reviews)
+                                    {
+                                        var rawText = !string.IsNullOrWhiteSpace(review.pros_translated) ? review.pros_translated :
+                                                      !string.IsNullOrWhiteSpace(review.pros) ? review.pros :
+                                                      !string.IsNullOrWhiteSpace(review.cons_translated) ? review.cons_translated :
+                                                      !string.IsNullOrWhiteSpace(review.cons) ? review.cons :
+                                                      review.title_translated ?? review.title ?? "Konaklama deneyimi paylaşıldı.";
+
+                                        var shortComment = rawText.Length > 160
+                                            ? rawText.Substring(0, 160).TrimEnd() + "..."
+                                            : rawText;
+
+                                        var cleanDate = review.date;
+                                        if (DateTime.TryParse(review.date, out var parsedDate))
+                                        {
+                                            cleanDate = parsedDate.ToString("dd.MM.yyyy");
+                                        }
+
+                                        var name = string.IsNullOrWhiteSpace(review.author?.name) ? "Misafir" : review.author.name;
+                                        var initials = string.Concat(name.Split(' ', StringSplitOptions.RemoveEmptyEntries).Take(2).Select(w => w[0].ToString().ToUpper()));
+                                        if (string.IsNullOrEmpty(initials)) { initials = "M"; }
+
+                                        var bgColors = new[] { "bg-slate-ink", "bg-terracotta", "bg-amber-gold", "bg-soft-success" };
+                                        var bgColor = bgColors[Math.Abs(name.GetHashCode()) % bgColors.Length];
+
+                                        <div class="p-space-lg bg-sand-surface rounded-xl flex flex-col justify-between shadow-sm hover:shadow transition-shadow">
+                                            <div>
+                                                <div class="flex items-center justify-between mb-space-sm">
+                                                    <div class="flex items-center gap-space-xs">
+                                                        @if (!string.IsNullOrWhiteSpace(review.author?.avatar))
+                                                        {
+                                                            <img src="@review.author.avatar" alt="@name" class="w-9 h-9 rounded-full object-cover border border-sand-border" />
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="w-9 h-9 rounded-full @bgColor text-pure-white font-label-caps text-label-caps flex items-center justify-center font-bold">
+                                                                @initials
+                                                            </div>
+                                                        }
+                                                        <div>
+                                                            <div class="font-label-md text-label-md text-slate-ink font-semibold">@name</div>
+                                                            @if (!string.IsNullOrWhiteSpace(review.author?.countrycode))
+                                                            {
+                                                                <div class="text-[0.6875rem] text-muted-stone uppercase tracking-wider">@countryName</div>
+                                                            }
+                                                        </div>
+                                                    </div>
+
+                                                    <span class="px-space-xs py-[2px] rounded bg-slate-ink text-pure-white font-label-caps text-label-caps shrink-0">
+                                                        @review.average_score.ToString("0.0")/10
+                                                    </span>
+                                                </div>
+
+                                                <p class="font-body-default text-body-default text-slate-ink italic leading-relaxed">
+                                                    "@shortComment"
+                                                </p>
+                                            </div>
+
+                                            <div class="mt-space-md pt-space-xs font-label-caps text-[0.75rem] text-muted-stone uppercase tracking-wider border-t border-sand-border/60 flex items-center justify-between">
+                                                <span class="truncate max-w-[200px]">@(review.stayed_room_info?.room_name ?? "Standart Oda")</span>
+                                                <span class="shrink-0 text-slate-ink font-semibold">@cleanDate</span>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                        </section>
+                    </div>
+
+                    <aside class="lg:col-span-4 lg:sticky lg:top-28">
+                        <div class="bg-pure-white rounded-2xl p-space-lg shadow-xl ring-1 ring-sand-border relative overflow-hidden">
+                            <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-terracotta via-amber-gold to-slate-ink"></div>
+                            <div class="flex items-center justify-between pb-space-sm mb-space-md">
+                                <div>
+                                    <span class="font-label-caps text-label-caps text-terracotta uppercase tracking-wider block">Rezervasyon Özeti</span>
+                                    <h3 class="font-headline-sm text-headline-sm text-slate-ink font-bold">@d.hotel_name</h3>
+                                </div>
+                                @if (d.hotel_include_breakfast == 1)
+                                {
+                                    <div class="text-right">
+                                        <span class="font-label-caps text-label-caps text-soft-success font-semibold">Kahvaltı Dahil</span>
+                                    </div>
+                                }
+                            </div>
+                            <div class="p-space-sm bg-sand-canvas rounded-xl mb-space-md space-y-space-xs">
+                                <div class="flex items-center justify-between text-slate-ink">
+                                    <div class="flex items-center gap-space-2xs">
+                                        <span class="material-symbols-outlined text-[18px] text-terracotta">calendar_month</span>
+                                        <span class="font-label-md text-label-md">@d.arrival_date — @d.departure_date</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="space-y-space-xs mb-space-md text-muted-stone font-body-sm text-body-sm">
+                                <div class="flex justify-between items-center">
+                                    <span>Gecelik</span>
+                                    <span class="text-slate-ink font-medium">@price?.gross_amount_per_night?.amount_rounded @price?.gross_amount_per_night?.currency</span>
+                                </div>
+                                @if (price?.included_taxes_and_charges_amount?.value > 0)
+                                {
+                                    <div class="flex justify-between items-center">
+                                        <span>Vergi &amp; Harçlar</span>
+                                        <span class="text-slate-ink font-medium">@price.included_taxes_and_charges_amount.amount_rounded @price.included_taxes_and_charges_amount.currency</span>
+                                    </div>
+                                }
+                                <div class="pt-space-xs"></div>
+                                <div class="flex justify-between items-baseline pt-space-xs">
+                                    <div>
+                                        <span class="font-label-caps text-label-caps text-slate-ink uppercase tracking-wider block">Toplam Tutar</span>
+                                        <span class="font-body-sm text-body-sm text-muted-stone text-xs">Tüm vergiler dahildir</span>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="font-headline-lg text-headline-lg text-slate-ink font-bold tracking-tight">@price?.gross_amount?.amount_rounded @price?.gross_amount?.currency</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="w-full py-space-md px-space-lg rounded-xl bg-terracotta hover:bg-slate-ink text-pure-white font-label-lg text-label-lg transition-all duration-300 shadow-md flex items-center justify-center gap-space-xs group" type="button">
+                                <span>Hemen Rezerve Et</span>
+                                <span class="material-symbols-outlined text-[20px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                            </button>
+                            <p class="font-body-sm text-body-sm text-muted-stone text-center text-xs mt-space-xs">Şimdi rezervasyon yapın, ödemeyi tesiste gerçekleştirin.</p>
+                            <div class="mt-space-lg pt-space-md space-y-space-xs">
+                                <div class="flex items-center gap-space-xs text-slate-ink font-label-md text-label-md">
+                                    <span class="material-symbols-outlined text-soft-success text-[18px]">bolt</span>
+                                    <span>Anında Onay</span>
+                                </div>
+                                @if (rooms.Any(r => r.refundable == 1))
+                                {
+                                    <div class="flex items-center gap-space-xs text-slate-ink font-label-md text-label-md">
+                                        <span class="material-symbols-outlined text-soft-success text-[18px]">event_available</span>
+                                        <span>Ücretsiz İptal Seçeneği Mevcut</span>
+                                    </div>
+                                }
+                                <div class="flex items-center gap-space-xs text-slate-ink font-label-md text-label-md">
+                                    <span class="material-symbols-outlined text-soft-success text-[18px]">verified_user</span>
+                                    <span>Güvenli Ödeme</span>
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>

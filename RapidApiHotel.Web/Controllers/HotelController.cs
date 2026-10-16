@@ -76,23 +76,87 @@ namespace RapidApiHotel.Web.Controllers
         public async Task<IActionResult> Detail(int hotel_id, string arrival_date, string departure_date, int adults, string children_age, int room_qty, string currency_code)
         {
             var client = new HttpClient();
-            var request = new HttpRequestMessage
+
+            var hotelDetailTask = client.SendAsync(new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri("https://booking-com15.p.rapidapi.com/api/v1/hotels/getHotelDetails?hotel_id=191605&adults=1&children_age=1%2C17&room_qty=1&units=metric&temperature_unit=c&languagecode=en-us&currency_code=EUR"),
+                RequestUri = new Uri($"https://booking-com15.p.rapidapi.com/api/v1/hotels/getHotelDetails?hotel_id={hotel_id}&arrival_date={arrival_date}&departure_date={departure_date}&adults={adults}&children_age={children_age}&room_qty={room_qty}&units=metric&temperature_unit=c&languagecode=tr&currency_code={currency_code}"),
                 Headers =
+                {
+                    { "x-rapidapi-key", "" },
+                    { "x-rapidapi-host", "booking-com15.p.rapidapi.com" },
+                },
+            });
+
+            var availableRoomListTask = client.SendAsync(new HttpRequestMessage
             {
-                { "x-rapidapi-key", "" },
-                { "x-rapidapi-host", "booking-com15.p.rapidapi.com" },
-            },
-            };
-            using (var response = await client.SendAsync(request))
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"https://booking-com15.p.rapidapi.com/api/v1/hotels/getRoomListWithAvailability?hotel_id={hotel_id}&arrival_date={arrival_date}&departure_date={departure_date}&adults={adults}&children_age={children_age}&room_qty={room_qty}&units=metric&temperature_unit=c&languagecode=tr&currency_code={currency_code}"),
+                Headers =
+                {
+                    { "x-rapidapi-key", "" },
+                    { "x-rapidapi-host", "booking-com15.p.rapidapi.com" },
+                },
+            });
+
+
+            var hotelReviewScoresTask = client.SendAsync(new HttpRequestMessage
             {
-                response.EnsureSuccessStatusCode();
-                var body = await response.Content.ReadAsStringAsync();
-                Console.WriteLine(body);
-                return View();
-            }
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"https://booking-com15.p.rapidapi.com/api/v1/hotels/getHotelReviewScores?hotel_id={hotel_id}&languagecode=tr"),
+                Headers =
+                {
+                    { "x-rapidapi-key", "" },
+                    { "x-rapidapi-host", "booking-com15.p.rapidapi.com" },
+                },
+            });
+
+            var hotelReviewsTipsTask = client.SendAsync(new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"https://booking-com15.p.rapidapi.com/api/v1/hotels/getHotelReviews?hotel_id={hotel_id}&sort_option_id=sort_most_relevant&languagecode=tr"),
+                Headers =
+                {
+                    { "x-rapidapi-key", "" },
+                    { "x-rapidapi-host", "booking-com15.p.rapidapi.com" },
+                },
+            });
+
+            var hotelDescriptionAndInfo = client.SendAsync(new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri($"https://booking-com15.p.rapidapi.com/api/v1/hotels/getDescriptionAndInfo?hotel_id={hotel_id}&languagecode=tr"),
+                Headers =
+                {
+                    { "x-rapidapi-key", "" },
+                    { "x-rapidapi-host", "booking-com15.p.rapidapi.com" },
+                },
+            });
+
+            await Task.WhenAll(hotelDetailTask, availableRoomListTask, hotelReviewScoresTask, hotelReviewsTipsTask, hotelDescriptionAndInfo);
+            var detailBody = await (await hotelDetailTask).Content.ReadAsStringAsync();
+            var reviewsTipsBody = await (await hotelReviewsTipsTask).Content.ReadAsStringAsync();
+            var reviewsScoresBody = await (await hotelReviewScoresTask).Content.ReadAsStringAsync();
+            var roomListBody = await (await availableRoomListTask).Content.ReadAsStringAsync();
+            var descriptionBody = await (await hotelDescriptionAndInfo).Content.ReadAsStringAsync();
+
+
+            var result = JsonConvert.DeserializeObject<HotelDetailViewModel>(detailBody);
+            result.roomList = JsonConvert.DeserializeObject<HotelRoomListWithAvailabilityViewModel>(roomListBody);
+            result.hotelReviewScores = JsonConvert.DeserializeObject<HotelReviewScoresViewModel>(reviewsScoresBody);
+            result.hotelReviewTips = JsonConvert.DeserializeObject<HotelReviewTipsViewModel>(reviewsTipsBody);
+            result.hotelDescriptionAndInfo = JsonConvert.DeserializeObject<HotelDetailDescriptionAndInfoViewModel>(descriptionBody);
+
+            ViewBag.HotelName = result.data.hotel_name;
+            ViewBag.CityName = result.data.city;
+            ViewBag.ArrivalDate = arrival_date;
+            ViewBag.DepartureDate = departure_date;
+            ViewBag.Adults = adults;
+            ViewBag.ChildrenAge = children_age;
+            ViewBag.RoomQty = room_qty;
+            ViewBag.CurrencyCode = currency_code;
+
+            return View(result);
         }
     }
 }

@@ -557,7 +557,15 @@
                                                         </div>
                                                         <span class="font-label-caps text-[10px] text-muted-stone uppercase">Vergiler ve Şehir Harcı Dahildir</span>
                                                     </div>
-                                                    <a class="px-space-lg py-space-sm rounded-lg bg-slate-ink text-pure-white hover:bg-terracotta transition-colors font-label-md text-label-md flex items-center justify-center gap-1 shadow-sm whitespace-nowrap" href="#">
+                                                    <a asp-action="Detail" asp-controller="Hotel"
+                                                       asp-route-hotel_id="@hotel.property.id"
+                                                       asp-route-arrival_date="@ViewBag.ArrivalDate"
+                                                       asp-route-departure_date="@ViewBag.DepartureDate"
+                                                       asp-route-adults="@ViewBag.Adults"
+                                                       asp-route-children_age="0"
+                                                       asp-route-room_qty="@ViewBag.RoomQty"
+                                                       asp-route-currency_code="@ViewBag.CurrencyCode"
+                                                       class="px-space-lg py-space-sm rounded-lg bg-slate-ink text-pure-white hover:bg-terracotta transition-colors font-label-md text-label-md flex items-center justify-center gap-1 shadow-sm whitespace-nowrap">
                                                         <span>Odayı İncele</span>
                                                         <span class="material-symbols-outlined text-[18px]">chevron_right</span>
                                                     </a>
