@@ -1,0 +1,36 @@
+﻿@model HotelDetailViewModel
+@{
+    var d = Model.data;
+    var raw = d.rawData;
+}
+
+<section class="scroll-mt-32 p-space-xl bg-sand-surface rounded-2xl" id="ayricaliklar">
+    <div class="flex items-center justify-between mb-space-lg flex-wrap gap-space-xs">
+        <div>
+            <span class="font-label-caps text-label-caps text-terracotta uppercase tracking-wider block mb-space-2xs">Konfor Donanımları</span>
+            <h3 class="font-headline-md text-headline-md text-slate-ink">Öne Çıkan Ayrıcalıklar &amp; Olanaklar</h3>
+        </div>
+        <span class="font-label-caps text-label-caps text-muted-stone">Tümü Tesis Tarafından Doğrulanmıştır</span>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-space-md">
+        @foreach (var facility in d.facilities_block?.facilities ?? new())
+        {
+            var iconName = facility.icon?.ToLowerInvariant() switch
+            {
+                "fitness" => "fitness_center",
+                "nosmoking" => "smoke_free",
+                "clean" => "room_service",
+                "disabled" => "accessible",
+                "food_and_drink" => "restaurant",
+                "family" => "family_restroom",
+                "shuttle" => "airport_shuttle",
+                _ => facility.icon ?? "check_circle"
+            };
+
+            <div class="flex items-center gap-space-sm p-space-sm bg-pure-white rounded-lg shadow-sm">
+                <span class="material-symbols-outlined text-slate-ink text-[22px]">@iconName</span>
+                <div class="font-label-md text-label-md text-slate-ink">@facility.name</div>
+            </div>
+        }
+    </div>
+</section>

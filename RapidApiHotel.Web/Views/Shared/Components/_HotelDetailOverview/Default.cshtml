@@ -1,0 +1,87 @@
+﻿@model HotelDetailViewModel
+
+@{
+    var d = Model.data;
+    var raw = d.rawData;
+
+    var hotelDesc = Model.hotelDescriptionAndInfo.data.FirstOrDefault(x => x.languagecode == "tr")?.description ?? Model.hotelDescriptionAndInfo?.data?.FirstOrDefault()?.description;
+    var countryCode = Model.hotelReviewTips.data.result.FirstOrDefault().author.countrycode.ToLowerInvariant();
+    var language = countryCode switch
+    {
+        "tr" => "Türkçe",
+        "gb" => "İngilizce",
+        "en" => "İngilizce",
+        "de" => "Almanca",
+        "us" => "İngilizce",
+        "en-gb" => "İngilizce",
+        "ru" => "Rusça",
+        "az" => "Azerice"
+    };
+}
+
+
+
+<section class="scroll-mt-32" id="genel-bakis">
+    <div class="flex items-center gap-space-xs mb-space-xs">
+        <span class="w-8 h-[2px] bg-terracotta"></span>
+        <span class="font-label-caps text-label-caps text-terracotta uppercase tracking-wider">Genel Bilgiler</span>
+    </div>
+    <h2 class="font-headline-lg text-headline-lg text-slate-ink mb-space-md">@d.hotel_name Hakkında</h2>
+    <div class="font-body-default text-body-default text-muted-stone space-y-space-md mb-space-lg leading-relaxed">
+        <p>
+            <strong class="text-slate-ink">@d.hotel_name</strong>, @d.city, @d.country_trans konumunda yer alan bir <strong>@d.accommodation_type_name</strong>.
+            Şehir merkezine <strong>@d.distance_to_cc.ToString("0.0") km</strong> uzaklıktadır.
+        </p>
+        <p>
+            Giriş saati: <strong>@raw?.checkin?.fromTime — @raw?.checkin?.untilTime</strong> ·
+            Çıkış saati: <strong>@raw?.checkout?.fromTime — @raw?.checkout?.untilTime</strong>
+        </p>
+        @if (d.hotel_include_breakfast == 1)
+        {
+            <p>✓ Kahvaltı fiyata dahildir.</p>
+        }
+        @if (d.is_family_friendly == 1)
+        {
+            <p>✓ Aile dostu tesis.</p>
+        }
+        @if (d.spoken_languages?.Any() == true)
+        {
+            <p>Konuşulan diller: <strong>@string.Join(", ", language)</strong></p>
+        }
+    </div>
+
+    @if (!string.IsNullOrWhiteSpace(hotelDesc))
+    {
+        <div class="font-body-default text-body-default text-slate-ink/80 space-y-space-sm mb-space-lg leading-relaxed whitespace-pre-line">
+            @Html.Raw(hotelDesc)
+        </div>
+    }
+
+    @if (d.top_ufi_benefits?.Any() == true)
+    {
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-space-sm">
+            @foreach (var benefit in d.top_ufi_benefits.Take(3))
+            {
+
+                var iconName = benefit.icon?.ToLowerInvariant() switch
+                {
+                    "fitness" => "fitness_center",
+                    "nosmoking" => "smoke_free",
+                    "clean" => "room_service",
+                    "disabled" => "accessible",
+                    "food_and_drink" => "restaurant",
+                    "family" => "family_restroom",
+                    "shuttle" => "airport_shuttle",
+                    _ => benefit.icon ?? "check_circle"
+                };
+
+                <div class="p-space-md rounded-xl bg-pure-white shadow-sm flex items-start gap-space-sm">
+                    <span class="material-symbols-outlined text-terracotta text-[24px]">@iconName</span>
+                    <div>
+                        <h4 class="font-label-lg text-label-lg text-slate-ink">@benefit.translated_name</h4>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</section>

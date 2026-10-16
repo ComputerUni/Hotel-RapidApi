@@ -1,0 +1,121 @@
+﻿@model HotelDetailViewModel
+
+@{
+    var d = Model.data;
+    var raw = d.rawData;
+    var rooms = Model.roomList?.available ?? new List<HotelRoomListWithAvailabilityViewModel.Available>();
+}
+
+
+<section class="scroll-mt-32" id="musait-odalar">
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-space-sm mb-space-lg">
+        <div>
+            <span class="font-label-caps text-label-caps text-terracotta uppercase tracking-wider block mb-space-2xs">Rezervasyon Seçenekleri</span>
+            <h2 class="font-headline-lg text-headline-lg text-slate-ink">Müsait Oda Tipleri</h2>
+        </div>
+        @if (rooms.Any())
+        {
+            <div class="flex items-center gap-space-xs text-soft-success font-label-caps text-label-caps">
+                <span class="w-2 h-2 rounded-full bg-soft-success animate-pulse"></span>
+                <span>@d.arrival_date — @d.departure_date için @rooms.Count Oda Seçeneği Mevcut</span>
+            </div>
+        }
+    </div>
+    <div class="space-y-space-lg">
+        @for (int i = 0; i < rooms.Count; i++)
+        {
+            var room = rooms[i];
+            bool isRecommended = i == 0;
+            <div class="relative bg-pure-white rounded-2xl p-space-md sm:p-space-lg @(isRecommended ? "shadow-md ring-2 ring-terracotta" : "shadow-sm hover:shadow-md transition-shadow")">
+                @if (isRecommended)
+                {
+                    <div class="absolute -top-3 left-6 px-space-sm py-1 rounded-full bg-terracotta text-pure-white font-label-caps text-label-caps tracking-wider uppercase shadow-sm flex items-center gap-1">
+                        <span class="material-symbols-outlined text-[14px]">star</span>
+                        <span>En Çok Tercih Edilen Seçenek</span>
+                    </div>
+                }
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-space-md @(isRecommended ? "mt-2" : "")">
+                    <div class="md:col-span-4 relative rounded-xl overflow-hidden min-h-[200px] bg-sand-surface flex items-center justify-center">
+                        @if (room.block_text?.policies?.Any() == true)
+                        {
+                            <span class="material-symbols-outlined text-[48px] text-muted-stone">hotel</span>
+                        }
+                        else
+                        {
+                            <span class="material-symbols-outlined text-[48px] text-muted-stone">hotel</span>
+                        }
+                        <span class="absolute top-2 left-2 px-space-xs py-1 rounded bg-slate-ink/80 text-pure-white font-label-caps text-[0.625rem]">@room.room_surface_in_m2 m²</span>
+                    </div>
+                    <div class="md:col-span-5 flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-headline-sm text-headline-sm text-slate-ink mb-1">@room.room_name</h3>
+                            <div class="flex flex-wrap items-center gap-space-2xs text-muted-stone font-body-sm text-body-sm mb-space-sm">
+                                <span class="flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-[16px]">group</span>
+                                    @room.nr_adults Yetişkin
+                                    @if (room.nr_children > 0)
+                                    {
+                                        <text>, @room.nr_children Çocuk</text>
+                                    }
+                                </span>
+                                <span>·</span>
+                                <span class="flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-[16px]">straighten</span>
+                                    @room.room_surface_in_m2 m²
+                                </span>
+                            </div>
+                            <div class="space-y-1">
+                                @if (room.breakfast_included == 1)
+                                {
+                                    <div class="flex items-center gap-space-xs text-soft-success font-body-sm text-body-sm font-medium">
+                                        <span class="material-symbols-outlined text-[18px]">done</span>
+                                        <span>Kahvaltı Dahil</span>
+                                    </div>
+                                }
+                                @if (room.refundable == 1)
+                                {
+                                    <div class="flex items-center gap-space-xs text-soft-success font-body-sm text-body-sm font-medium">
+                                        <span class="material-symbols-outlined text-[18px]">verified</span>
+                                        <span>Ücretsiz İptal — @room.refundable_until</span>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="flex items-center gap-space-xs text-muted-stone font-body-sm text-body-sm">
+                                        <span class="material-symbols-outlined text-[16px]">event_busy</span>
+                                        <span>@(room.paymentterms?.cancellation?.type_translation ?? "İade Edilmez Tarife")</span>
+                                    </div>
+                                }
+                                @if (room.paymentterms?.prepayment != null)
+                                {
+                                    <div class="flex items-center gap-space-xs text-muted-stone font-body-sm text-body-sm">
+                                        <span class="material-symbols-outlined text-[16px] text-terracotta">credit_card_off</span>
+                                        <span>@room.paymentterms.prepayment.type_translation</span>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        @if (room.mealplan != null)
+                        {
+                            <div class="mt-space-md pt-space-xs">
+                                <span class="px-space-xs py-1 rounded bg-sand-surface text-slate-ink font-label-caps text-label-caps">@room.mealplan</span>
+                            </div>
+                        }
+                    </div>
+                    <div class="md:col-span-3 flex flex-col justify-between md:items-end md:text-right pt-space-sm md:pt-0">
+                        <div>
+                            <div class="font-label-caps text-label-caps text-muted-stone">@room.nr_adults Yetişkin @(room.nr_children > 0 ? $"+ {room.nr_children} Çocuk" : "")</div>
+                            <div class="font-headline-lg text-headline-lg @(isRecommended ? "text-terracotta" : "text-slate-ink") font-bold mt-1">
+                                @room.product_price_breakdown?.gross_amount?.amount_rounded @room.product_price_breakdown?.gross_amount?.currency
+                            </div>
+                            <div class="font-body-sm text-body-sm text-muted-stone">Vergiler &amp; Harçlar Dahil</div>
+                        </div>
+                        <button class="w-full md:w-auto mt-space-md px-space-lg py-space-sm rounded-lg @(isRecommended ? "bg-terracotta hover:bg-slate-ink text-pure-white shadow-sm" : "bg-sand-surface hover:bg-slate-ink text-slate-ink hover:text-pure-white") font-label-md text-label-md transition-colors" type="button">
+                            @(isRecommended ? "Bu Odayı Seç" : "Odayı Seç")
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
