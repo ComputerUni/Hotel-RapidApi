@@ -1,0 +1,33 @@
+﻿@model HotelDetailViewModel
+
+@{
+    var d = Model.data;
+    var inv = System.Globalization.CultureInfo.InvariantCulture;
+    var mapLat = d.latitude.ToString("0.000000", inv);
+    var mapLng = d.longitude.ToString("0.000000", inv);
+}
+
+<section class="scroll-mt-32" id="konum-harita">
+    <div class="flex items-center gap-space-xs mb-space-xs">
+        <span class="w-8 h-[2px] bg-terracotta"></span>
+        <span class="font-label-caps text-label-caps text-terracotta uppercase tracking-wider">Şehir Rehberi &amp; Konum</span>
+    </div>
+    <h2 class="font-headline-lg text-headline-lg text-slate-ink mb-space-md">@d.city'de, Her Yere Yakın</h2>
+
+    <div class="relative w-full h-[360px] rounded-2xl overflow-hidden shadow-sm mb-space-lg border border-sand-border">
+        <iframe src="https://maps.google.com/maps?q=@(mapLat),@(mapLng)&hl=tr&z=15&output=embed"
+                class="w-full h-full border-0" allowfullscreen loading="lazy"></iframe>
+
+        <div class="absolute bottom-space-md left-space-md p-space-md bg-pure-white/95 backdrop-blur-md rounded-xl shadow-md max-w-xs pointer-events-none">
+            <div class="flex items-center gap-space-xs mb-1">
+                <span class="w-2.5 h-2.5 rounded-full bg-terracotta animate-ping"></span>
+                <span class="font-headline-sm text-headline-sm text-slate-ink font-bold">@d.hotel_name</span>
+            </div>
+            <p class="font-body-sm text-body-sm text-muted-stone mb-space-xs line-clamp-2">@d.address</p>
+            <div class="text-terracotta font-label-caps text-label-caps flex items-center gap-1">
+                <span class="material-symbols-outlined text-[14px]">directions_walk</span>
+                <span>Merkeze @d.distance_to_cc.ToString("0.0") km</span>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,138 @@
+﻿@model HotelDetailViewModel
+
+@{
+    var d = Model.data;
+    var raw = d.rawData;
+
+    var reviews = Model.hotelReviewTips?.data?.result?
+         .Where(r => !string.IsNullOrWhiteSpace(r.pros_translated) ||
+                     !string.IsNullOrWhiteSpace(r.pros) ||
+                     !string.IsNullOrWhiteSpace(r.cons_translated) ||
+                     !string.IsNullOrWhiteSpace(r.cons) ||
+                     !string.IsNullOrWhiteSpace(r.title_translated) ||
+                     !string.IsNullOrWhiteSpace(r.title))
+         .Take(4)
+         .ToList() ?? new();
+
+    var scoreBreakdown = Model.hotelReviewScores?.data?.FirstOrDefault()?.score_breakdown?.FirstOrDefault();
+    var questions = scoreBreakdown?.question?.Where(x => x.score != null).Take(4).ToList() ?? new();
+
+    var countryCode = Model.hotelReviewTips.data.result.FirstOrDefault().author.countrycode.ToLowerInvariant();
+
+    var countryName = countryCode switch
+    {
+        "tr" => "Türkiye",
+        "gb" => "Birleşik Krallık",
+        "de" => "Almanya",
+        "us" => "ABD",
+        "ru" => "Rusya",
+        "az" => "Azerbaycan",
+        "ge" => "Gürcistan",
+        "nl" => "Flemenkçe",
+        _ => countryCode.ToUpper() ?? ""
+    };
+}
+
+<section class="scroll-mt-32" id="misafir-yorumlari">
+    <div class="flex items-center justify-between mb-space-lg flex-wrap gap-space-xs">
+        <div>
+            <span class="font-label-caps text-label-caps text-terracotta uppercase tracking-wider block mb-space-2xs">Doğrulanmış Deneyimler</span>
+            <h2 class="font-headline-lg text-headline-lg text-slate-ink">Misafir Değerlendirmeleri</h2>
+        </div>
+        <div class="flex items-center gap-space-xs">
+            <span class="font-label-caps text-label-caps text-muted-stone">Toplam:</span>
+            <span class="font-headline-sm text-headline-sm text-slate-ink font-bold">@d.review_nr Yorum</span>
+        </div>
+    </div>
+
+    @if (questions.Any())
+    {
+        <div class="p-space-xl bg-pure-white rounded-2xl shadow-sm mb-space-lg">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-space-xl gap-y-space-md">
+                @foreach (var q in questions)
+                {
+                    float scoreVal = 0;
+                    float.TryParse(q.score?.ToString(), out scoreVal);
+                    <div>
+                        <div class="flex justify-between items-center mb-1 font-label-md text-label-md">
+                            <span class="text-slate-ink">@q.localized_question</span>
+                            <span class="text-slate-ink font-bold">@scoreVal.ToString("0.0")</span>
+                        </div>
+                        <div class="w-full h-2 rounded-full bg-sand-surface overflow-hidden">
+                            <div class="h-full bg-terracotta rounded-full" style="width: @((scoreVal * 10).ToString("0", System.Globalization.CultureInfo.InvariantCulture))%;"></div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+    @if (reviews.Any())
+    {
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+            @foreach (var review in reviews)
+            {
+                var rawText = !string.IsNullOrWhiteSpace(review.pros_translated) ? review.pros_translated :
+                              !string.IsNullOrWhiteSpace(review.pros) ? review.pros :
+                              !string.IsNullOrWhiteSpace(review.cons_translated) ? review.cons_translated :
+                              !string.IsNullOrWhiteSpace(review.cons) ? review.cons :
+                              review.title_translated ?? review.title ?? "Konaklama deneyimi paylaşıldı.";
+
+                var shortComment = rawText.Length > 160
+                    ? rawText.Substring(0, 160).TrimEnd() + "..."
+                    : rawText;
+
+                var cleanDate = review.date;
+                if (DateTime.TryParse(review.date, out var parsedDate))
+                {
+                    cleanDate = parsedDate.ToString("dd.MM.yyyy");
+                }
+
+                var name = string.IsNullOrWhiteSpace(review.author?.name) ? "Misafir" : review.author.name;
+                var initials = string.Concat(name.Split(' ', StringSplitOptions.RemoveEmptyEntries).Take(2).Select(w => w[0].ToString().ToUpper()));
+                if (string.IsNullOrEmpty(initials)) { initials = "M"; }
+
+                var bgColors = new[] { "bg-slate-ink", "bg-terracotta", "bg-amber-gold", "bg-soft-success" };
+                var bgColor = bgColors[Math.Abs(name.GetHashCode()) % bgColors.Length];
+
+                <div class="p-space-lg bg-sand-surface rounded-xl flex flex-col justify-between shadow-sm hover:shadow transition-shadow">
+                    <div>
+                        <div class="flex items-center justify-between mb-space-sm">
+                            <div class="flex items-center gap-space-xs">
+                                @if (!string.IsNullOrWhiteSpace(review.author?.avatar))
+                                {
+                                    <img src="@review.author.avatar" alt="@name" class="w-9 h-9 rounded-full object-cover border border-sand-border" />
+                                }
+                                else
+                                {
+                                    <div class="w-9 h-9 rounded-full @bgColor text-pure-white font-label-caps text-label-caps flex items-center justify-center font-bold">
+                                        @initials
+                                    </div>
+                                }
+                                <div>
+                                    <div class="font-label-md text-label-md text-slate-ink font-semibold">@name</div>
+                                    @if (!string.IsNullOrWhiteSpace(review.author?.countrycode))
+                                    {
+                                        <div class="text-[0.6875rem] text-muted-stone uppercase tracking-wider">@countryName</div>
+                                    }
+                                </div>
+                            </div>
+
+                            <span class="px-space-xs py-[2px] rounded bg-slate-ink text-pure-white font-label-caps text-label-caps shrink-0">
+                                @review.average_score.ToString("0.0")/10
+                            </span>
+                        </div>
+
+                        <p class="font-body-default text-body-default text-slate-ink italic leading-relaxed">
+                            "@shortComment"
+                        </p>
+                    </div>
+
+                    <div class="mt-space-md pt-space-xs font-label-caps text-[0.75rem] text-muted-stone uppercase tracking-wider border-t border-sand-border/60 flex items-center justify-between">
+                        <span class="truncate max-w-[200px]">@(review.stayed_room_info?.room_name ?? "Standart Oda")</span>
+                        <span class="shrink-0 text-slate-ink font-semibold">@cleanDate</span>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</section>

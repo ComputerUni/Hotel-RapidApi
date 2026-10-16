@@ -147,7 +147,7 @@ namespace RapidApiHotel.Web.Controllers
             result.hotelReviewTips = JsonConvert.DeserializeObject<HotelReviewTipsViewModel>(reviewsTipsBody);
             result.hotelDescriptionAndInfo = JsonConvert.DeserializeObject<HotelDetailDescriptionAndInfoViewModel>(descriptionBody);
 
-            ViewBag.HotelName = result.data.hotel_name;
+            ViewBag.HotelName = result?.data?.hotel_name ?? "Otel Detayı";
             ViewBag.CityName = result.data.city;
             ViewBag.ArrivalDate = arrival_date;
             ViewBag.DepartureDate = departure_date;
