@@ -36,7 +36,7 @@ Booking.com API'sini kullanarak kolay ve hızlı bir şekilde otel araması yapa
 | **C#** | 11+ | Backend programlama dili |
 | **Newtonsoft.Json** | 13.0.4 | JSON serialization/deserialization |
 | **RapidAPI** | - | Booking.com API erişimi |
-| **Bootstrap** | - | Responsive UI tasarımı |
+| **Tailwind CSS** | - | Responsive UI tasarımı |
 
 ---
 
