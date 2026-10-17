@@ -1,0 +1,261 @@
+﻿@model HotelListViewModel
+
+@{
+    int currentPage = ViewBag.CurrentPage ?? 1;
+    var hotelCount = Model?.data?.hotels?.Count ?? 0;
+    int pageSize = 20;
+    int startCount = hotelCount > 0 ? ((currentPage - 1) * pageSize) + 1 : 0;
+    int endCount = ((currentPage - 1) * pageSize) + hotelCount;
+}
+
+<div class="lg:col-span-8 xl:col-span-9 space-y-space-lg">
+    <!-- Results Count and Context Bar -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm bg-pure-white p-space-md rounded-xl shadow-sm">
+        <div class="flex items-center gap-space-sm">
+            <div class="w-2.5 h-2.5 rounded-full bg-soft-success"></div>
+            <p class="font-body-sm text-body-sm text-slate-ink">
+                Seçili kriterlerle eşleşen <span class="font-bold text-slate-ink">84</span> mükemmel konaklama noktası
+            </p>
+        </div>
+        <div class="flex items-center gap-space-xs text-muted-stone font-label-caps text-label-caps">
+            <span class="material-symbols-outlined text-[16px]">info</span>
+            Fiyatlara tüm yerel şehir vergileri ve KDV dahildir
+        </div>
+    </div>
+    @if (Model?.data?.hotels == null || !Model.data.hotels.Any())
+    {
+        <p>Sonuç bulunamadı.</p>
+    }
+    else
+    {
+        @foreach (var hotel in Model.data.hotels)
+        {
+            var prop = hotel.property;
+
+            var scoreWord = prop.reviewScoreWord switch
+            {
+                "Good" => "İyi",
+                "Very Good" => "Çok İyi",
+                "Fabulous" => "Harika",
+                "Superb" => "Mükemmel",
+                "Exceptional" => "Olağanüstü",
+                "Pleasant" => "Hoş",
+                "Fair" => "Orta",
+                _ => prop.reviewScoreWord
+            };
+
+            string TranslateBadge(string text) => text switch
+            {
+                "Late Escape Deal" => "Son Dakika Fırsatı",
+                "Mobile-only price" => "Mobil Fiyatı",
+                "Free cancellation" => "Ücretsiz İptal",
+                "No prepayment needed" => "Ön Ödeme Gerekmez",
+                "Breakfast included" => "Kahvaltı Dahil",
+                _ => text
+            };
+
+
+            <article class="bg-pure-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col md:flex-row group">
+                <div class="md:w-80 relative flex-shrink-0 bg-sand-surface overflow-hidden">
+                    <img class="w-full h-64 md:h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                         alt="@prop.name"
+                         src="@(prop.photoUrls?.FirstOrDefault())" />
+                    <div class="absolute top-3 left-3 flex flex-col gap-1.5 items-start">
+                        @if (!string.IsNullOrEmpty(prop.wishlistName))
+                        {
+                            <span class="px-2.5 py-1 rounded-md bg-slate-ink/90 backdrop-blur-md text-pure-white font-label-caps text-label-caps uppercase tracking-wider">
+                                @prop.wishlistName
+                            </span>
+                        }
+
+                        @if (prop.isPreferredPlus)
+                        {
+                            <span class="px-2 py-0.5 rounded bg-terracotta text-pure-white font-label-caps text-[10px] font-bold">
+                                ⭐ Öne Çıkan
+                            </span>
+                        }
+                        else if (prop.isPreferred)
+                        {
+                            <span class="px-2 py-0.5 rounded bg-terracotta text-pure-white font-label-caps text-[10px] font-bold">
+                                Tercih Edilen
+                            </span>
+                        }
+
+                    </div>
+                    <button aria-label="Favorilere Ekle" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-pure-white/80 backdrop-blur-md flex items-center justify-center text-slate-ink hover:text-error hover:scale-110 transition-all shadow-sm" type="button">
+                        <span class="material-symbols-outlined text-[18px]">favorite</span>
+                    </button>
+                    <div class="absolute bottom-3 left-3 bg-slate-ink/80 backdrop-blur-md text-pure-white px-2 py-1 rounded-md text-[11px] font-medium flex items-center gap-1">
+                        <span class="material-symbols-outlined text-[14px]">photo_library</span>
+                        <span>@(prop.photoUrls?.Length ?? 0) Fotoğraf</span>
+                    </div>
+                </div>
+                <div class="p-space-lg flex-1 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-start justify-between gap-space-sm mb-space-2xs">
+                            <div>
+                                <div class="flex items-center gap-1.5 mb-1">
+                                    <div class="flex text-amber-gold">
+                                        @for (int i = 0; i < prop.accuratePropertyClass; i++)
+                                        {
+                                            <span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                                        }
+
+                                    </div>
+                                </div>
+                                <h3 class="font-headline-md text-headline-md text-slate-ink group-hover:text-terracotta transition-colors">
+                                    <a href="#">@prop.name</a>
+                                </h3>
+                            </div>
+                            <div class="flex items-center gap-2 flex-shrink-0 text-right">
+                                <div>
+                                    <span class="block font-headline-sm text-headline-sm text-slate-ink leading-tight">@scoreWord</span>
+                                    <span class="block font-label-caps text-label-caps text-muted-stone">@prop.reviewCount Yorum</span>
+                                </div>
+                                <div class="w-10 h-10 rounded-xl bg-slate-ink text-pure-white font-headline-sm text-headline-sm flex items-center justify-center shadow-sm">
+                                    @prop.reviewScore.ToString("0.0")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-1.5 text-muted-stone font-body-sm text-body-sm mb-space-md">
+                            <span class="material-symbols-outlined text-[18px] text-terracotta">calendar_month</span>
+                            <span>Giriş: <strong>@prop.checkinDate</strong> · Çıkış <strong>@prop.checkoutDate</strong></span>
+                        </div>
+                        @if (prop.priceBreakdown?.benefitBadges?.Any() == true)
+                        {
+                            <div class="inline-flex items-center gap-1.5 text-soft-success font-label-md text-label-md bg-soft-success-bg px-2.5 py-1 rounded-md">
+                                <span class="material-symbols-outlined text-[16px]">check_circle</span>
+                                <span>@string.Join(" • ", prop.priceBreakdown.benefitBadges.Select(b => TranslateBadge(b.text)))</span>
+                            </div>
+                        }
+                    </div>
+                    <div class="pt-space-md mt-space-md flex flex-col sm:flex-row sm:items-end justify-between gap-space-sm">
+                        <div>
+                            @if (prop.priceBreakdown?.strikethroughPrice != null)
+                            {
+                                <span class="line-through text-muted text-sm">
+                                    @prop.priceBreakdown.strikethroughPrice.amountRounded @prop.priceBreakdown.strikethroughPrice.currency
+                                </span>
+                            }
+                            <div class="flex items-baseline gap-2">
+                                <span class="font-price-hero text-price-hero text-slate-ink">
+                                    @prop.priceBreakdown?.grossPrice?.amountRounded @prop.priceBreakdown?.grossPrice?.currency
+                                </span>
+                                @if (prop.priceBreakdown?.excludedPrice != null)
+                                {
+                                    <span class="font-label-caps text-[10px] text-muted-stone uppercase">
+                                        + @prop.priceBreakdown.excludedPrice.value.ToString("N0") @prop.priceBreakdown.excludedPrice.currency Vergi
+                                    </span>
+                                }
+
+                            </div>
+                            <span class="font-label-caps text-[10px] text-muted-stone uppercase">Vergiler ve Şehir Harcı Dahildir</span>
+                        </div>
+                        <a asp-action="Detail" asp-controller="Hotel"
+                           asp-route-hotel_id="@hotel.property.id"
+                           asp-route-arrival_date="@ViewBag.ArrivalDate"
+                           asp-route-departure_date="@ViewBag.DepartureDate"
+                           asp-route-adults="@ViewBag.Adults"
+                           asp-route-children_age="0"
+                           asp-route-room_qty="@ViewBag.RoomQty"
+                           asp-route-currency_code="@ViewBag.CurrencyCode"
+                           class="px-space-lg py-space-sm rounded-lg bg-slate-ink text-pure-white hover:bg-terracotta transition-colors font-label-md text-label-md flex items-center justify-center gap-1 shadow-sm whitespace-nowrap">
+                            <span>Odayı İncele</span>
+                            <span class="material-symbols-outlined text-[18px]">chevron_right</span>
+                        </a>
+                    </div>
+                </div>
+            </article>
+        }
+    }
+
+                                
+    <!-- Editorial Pagination -->
+    <div class="pt-space-xl pb-space-lg flex flex-col sm:flex-row items-center justify-between gap-space-md">
+        <span class="font-body-sm text-body-sm text-muted-stone">
+            @if (hotelCount > 0)
+            {
+                <span>Sayfa <strong>@currentPage</strong> · Bu sayfada <strong>@startCount - @endCount</strong> arası gösteriliyor</span>
+            }
+            else
+            {
+                <span>Gösterilecek sonuç bulunamadı.</span>
+            }
+        </span>
+        <nav aria-label="Sayfalama" class="flex items-center gap-space-2xs">
+            @if (currentPage > 1)
+            {
+                <a asp-action="Search" asp-controller="Hotel"
+                   asp-route-dest_id="@ViewBag.DestId"
+                   asp-route-search_type="@ViewBag.Search"
+                   asp-route-arrival_date="@ViewBag.ArrivalDate"
+                   asp-route-departure_date="@ViewBag.DepartureDate"
+                   asp-route-adults="@ViewBag.Adults"
+                   asp-route-children_age="@ViewBag.ChildrenAge"
+                   asp-route-room_qty="@ViewBag.RoomQty"
+                   asp-route-currency_code="@ViewBag.CurrencyCode"
+                   asp-route-page_number="@(currentPage - 1)"
+                   class="p-2 rounded-lg bg-sand-canvas hover:bg-sand-surface text-slate-ink transition-colors flex items-center justify-center">
+                    <span class="material-symbols-outlined text-[18px]">chevron_left</span>
+                </a>
+            }
+            else
+            {
+                <button class="p-2 rounded-lg bg-sand-surface text-outline-variant cursor-not-allowed" disabled type="button">
+                    <span class="material-symbols-outlined text-[18px]">chevron_left</span>
+                </button>
+            }
+
+            @for (int p = Math.Max(1, currentPage - 1); p <= currentPage + 2; p++)
+            {
+                var pageNum = p;
+                if (pageNum == currentPage)
+                {
+                    <span class="w-9 h-9 rounded-lg bg-slate-ink text-pure-white font-label-md text-label-md flex items-center justify-center shadow-sm font-bold">
+                        @pageNum
+                    </span>
+                }
+                else
+                {
+                    <a asp-action="Search" asp-controller="Hotel"
+                       asp-route-dest_id="@ViewBag.DestId"
+                       asp-route-search_type="@ViewBag.Search"
+                       asp-route-arrival_date="@ViewBag.ArrivalDate"
+                       asp-route-departure_date="@ViewBag.DepartureDate"
+                       asp-route-adults="@ViewBag.Adults"
+                       asp-route-children_age="@(ViewBag.ChildrenAge ?? "")"
+                       asp-route-room_qty="@ViewBag.RoomQty"
+                       asp-route-currency_code="@ViewBag.CurrencyCode"
+                       asp-route-page_number="@pageNum"
+                       class="w-9 h-9 rounded-lg bg-sand-canvas hover:bg-sand-surface text-slate-ink font-label-md text-label-md flex items-center justify-center transition-colors">
+                        @pageNum
+                    </a>
+                }
+            }
+
+            <span class="px-1 text-muted-stone font-bold">…</span>
+            @if (hotelCount > 0)
+            {
+                <a asp-action="Search" asp-controller="Hotel"
+                   asp-route-dest_id="@ViewBag.DestId"
+                   asp-route-search_type="@ViewBag.Search"
+                   asp-route-arrival_date="@ViewBag.ArrivalDate"
+                   asp-route-departure_date="@ViewBag.DepartureDate"
+                   asp-route-adults="@ViewBag.Adults"
+                   asp-route-children_age="@(ViewBag.ChildrenAge ?? "")"
+                   asp-route-room_qty="@ViewBag.RoomQty"
+                   asp-route-currency_code="@ViewBag.CurrencyCode"
+                   asp-route-page_number="@(currentPage + 1)"
+                   class="p-2 rounded-lg bg-sand-canvas hover:bg-sand-surface text-slate-ink transition-colors flex items-center justify-center">
+                    <span class="material-symbols-outlined text-[18px]">chevron_right</span>
+                </a>
+            }
+            else
+            {
+                <button class="p-2 rounded-lg bg-sand-surface text-outline-variant cursor-not-allowed" disabled type="button">
+                    <span class="material-symbols-outlined text-[18px]">chevron_right</span>
+                </button>
+            }
+        </nav>
+    </div>
+</div>

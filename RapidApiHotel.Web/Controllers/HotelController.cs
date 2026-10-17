@@ -46,16 +46,16 @@ namespace RapidApiHotel.Web.Controllers
         }
 
 
-        public async Task<IActionResult> Search(string dest_id, string search_type, string arrival_date, string departure_date, int adults, string children_age, int room_qty, string currency_code)
+        public async Task<IActionResult> Search(string dest_id, string search_type, string arrival_date, string departure_date, int adults, string children_age, int room_qty, string currency_code, int page_number=1)
         {
             var client = new HttpClient();
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
-                RequestUri = new Uri($"https://booking-com15.p.rapidapi.com/api/v1/hotels/searchHotels?dest_id={dest_id}&search_type=CITY&arrival_date={arrival_date}&departure_date={departure_date}&adults={adults}&children_age={children_age}&room_qty={room_qty}&currency_code={currency_code}"),
+                RequestUri = new Uri($"https://booking-com15.p.rapidapi.com/api/v1/hotels/searchHotels?dest_id={dest_id}&search_type=CITY&arrival_date={arrival_date}&departure_date={departure_date}&adults={adults}&children_age={children_age}&room_qty={room_qty}&currency_code={currency_code}&page_number={page_number}"),
                 Headers =
             {
-                { "x-rapidapi-key", "" },
+                { "x-rapidapi-key", "97b3f5de59mshc0273236bcf196bp124f67jsn36830dd7e0a1" },
                 { "x-rapidapi-host", "booking-com15.p.rapidapi.com" },
             },
             };
@@ -64,10 +64,16 @@ namespace RapidApiHotel.Web.Controllers
                 response.EnsureSuccessStatusCode();
                 var body = await response.Content.ReadAsStringAsync();
                 var result = JsonConvert.DeserializeObject<HotelListViewModel>(body);
+
+                ViewBag.DestId = dest_id;
+                ViewBag.Search = search_type ?? "CITY";
                 ViewBag.ArrivalDate = arrival_date;
                 ViewBag.DepartureDate = departure_date;
                 ViewBag.Adults = adults;
+                ViewBag.ChildrenAge = children_age;
                 ViewBag.RoomQty = room_qty;
+                ViewBag.CurrencyCode = currency_code;
+                ViewBag.CurrentPage = page_number;
                 ViewBag.HotelCount = result?.data?.hotels?.Count ?? 0;
                 return View(result);
             }
@@ -148,7 +154,7 @@ namespace RapidApiHotel.Web.Controllers
             result.hotelDescriptionAndInfo = JsonConvert.DeserializeObject<HotelDetailDescriptionAndInfoViewModel>(descriptionBody);
 
             ViewBag.HotelName = result?.data?.hotel_name ?? "Otel Detayı";
-            ViewBag.CityName = result.data.city;
+            ViewBag.CityName = result?.data?.city ?? result?.data?.hotel_name ?? "Bilinmiyor";
             ViewBag.ArrivalDate = arrival_date;
             ViewBag.DepartureDate = departure_date;
             ViewBag.Adults = adults;

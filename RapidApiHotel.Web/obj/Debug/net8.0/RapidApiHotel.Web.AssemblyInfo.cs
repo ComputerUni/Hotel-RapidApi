@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RapidApiHotel.Web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+779fee1cc69f99602a0f5455b46b4de3992a79e9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+940abfbf616f9d3debea67a30ca8d53f5a02956e")]
 [assembly: System.Reflection.AssemblyProductAttribute("RapidApiHotel.Web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RapidApiHotel.Web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

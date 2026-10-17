@@ -43,6 +43,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG90ZWxcU2VhcmNoLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/BURHAN/Desktop/HotelRapidApi/RapidApiHotel.Web/Views/Shared/Components/_HotelDetailAvailableRoomPrice/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcX0hvdGVsRGV0YWlsQXZhaWxhYmxlUm9vbVByaWNlXERlZmF1bHQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/BURHAN/Desktop/HotelRapidApi/RapidApiHotel.Web/Views/Shared/Components/_HotelDetailAvailableRooms/Default.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcX0hvdGVsRGV0YWlsQXZhaWxhYmxlUm9vbXNcRGVmYXVsdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -59,6 +63,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcX0hvdGVsRGV0YWlsSGVhZGVyXERlZmF1bHQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/BURHAN/Desktop/HotelRapidApi/RapidApiHotel.Web/Views/Shared/Components/_HotelDetailHead/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcX0hvdGVsRGV0YWlsSGVhZFxEZWZhdWx0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/BURHAN/Desktop/HotelRapidApi/RapidApiHotel.Web/Views/Shared/Components/_HotelDetailLocation/Default.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcX0hvdGVsRGV0YWlsTG9jYXRpb25cRGVmYXVsdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -73,6 +81,66 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/BURHAN/Desktop/HotelRapidApi/RapidApiHotel.Web/Views/Shared/Components/_HotelDetailReviews/Default.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcX0hvdGVsRGV0YWlsUmV2aWV3c1xEZWZhdWx0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/BURHAN/Desktop/HotelRapidApi/RapidApiHotel.Web/Views/Shared/Components/_HotelMainPageAccommodationThemes/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcX0hvdGVsTWFpblBhZ2VBY2NvbW1vZGF0aW9uVGhlbWVzXERlZmF1bHQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/BURHAN/Desktop/HotelRapidApi/RapidApiHotel.Web/Views/Shared/Components/_HotelMainPageCuratedDestinations/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcX0hvdGVsTWFpblBhZ2VDdXJhdGVkRGVzdGluYXRpb25zXERlZmF1bHQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/BURHAN/Desktop/HotelRapidApi/RapidApiHotel.Web/Views/Shared/Components/_HotelMainPageEditorChoices/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcX0hvdGVsTWFpblBhZ2VFZGl0b3JDaG9pY2VzXERlZmF1bHQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/BURHAN/Desktop/HotelRapidApi/RapidApiHotel.Web/Views/Shared/Components/_HotelMainPageFooter/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcX0hvdGVsTWFpblBhZ2VGb290ZXJcRGVmYXVsdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/BURHAN/Desktop/HotelRapidApi/RapidApiHotel.Web/Views/Shared/Components/_HotelMainPageHeader/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcX0hvdGVsTWFpblBhZ2VIZWFkZXJcRGVmYXVsdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/BURHAN/Desktop/HotelRapidApi/RapidApiHotel.Web/Views/Shared/Components/_HotelMainPageHead/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcX0hvdGVsTWFpblBhZ2VIZWFkXERlZmF1bHQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/BURHAN/Desktop/HotelRapidApi/RapidApiHotel.Web/Views/Shared/Components/_HotelMainPageHeroSearch/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcX0hvdGVsTWFpblBhZ2VIZXJvU2VhcmNoXERlZmF1bHQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/BURHAN/Desktop/HotelRapidApi/RapidApiHotel.Web/Views/Shared/Components/_HotelMainPageStatsSplit/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcX0hvdGVsTWFpblBhZ2VTdGF0c1NwbGl0XERlZmF1bHQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/BURHAN/Desktop/HotelRapidApi/RapidApiHotel.Web/Views/Shared/Components/_HotelMainPageWhyStayFinder/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcX0hvdGVsTWFpblBhZ2VXaHlTdGF5RmluZGVyXERlZmF1bHQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/BURHAN/Desktop/HotelRapidApi/RapidApiHotel.Web/Views/Shared/Components/_HotelSearchFilters/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcX0hvdGVsU2VhcmNoRmlsdGVyc1xEZWZhdWx0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/BURHAN/Desktop/HotelRapidApi/RapidApiHotel.Web/Views/Shared/Components/_HotelSearchFooter/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcX0hvdGVsU2VhcmNoRm9vdGVyXERlZmF1bHQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/BURHAN/Desktop/HotelRapidApi/RapidApiHotel.Web/Views/Shared/Components/_HotelSearchHeader/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcX0hvdGVsU2VhcmNoSGVhZGVyXERlZmF1bHQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/BURHAN/Desktop/HotelRapidApi/RapidApiHotel.Web/Views/Shared/Components/_HotelSearchHead/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcX0hvdGVsU2VhcmNoSGVhZFxEZWZhdWx0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/BURHAN/Desktop/HotelRapidApi/RapidApiHotel.Web/Views/Shared/Components/_HotelSearchLeftFilterPanel/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcX0hvdGVsU2VhcmNoTGVmdEZpbHRlclBhbmVsXERlZmF1bHQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/BURHAN/Desktop/HotelRapidApi/RapidApiHotel.Web/Views/Shared/Components/_HotelSearchMainResults/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcX0hvdGVsU2VhcmNoTWFpblJlc3VsdHNcRGVmYXVsdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/BURHAN/Desktop/HotelRapidApi/RapidApiHotel.Web/Views/Shared/Error.cshtml]

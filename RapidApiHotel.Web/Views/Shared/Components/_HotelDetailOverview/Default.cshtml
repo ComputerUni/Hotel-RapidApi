@@ -9,13 +9,62 @@
     var language = countryCode switch
     {
         "tr" => "Türkçe",
-        "gb" => "İngilizce",
-        "en" => "İngilizce",
-        "de" => "Almanca",
-        "us" => "İngilizce",
-        "en-gb" => "İngilizce",
+        "az" => "Azerice",
+        "kk" or "kz" => "Kazakça",
+        "uz" => "Özbekçe",
+        "tm" => "Türkmence",
+        "ky" or "kg" => "Kırgızca",
+
+        "en" or "gb" or "us" or "en-gb" or "en-us" or "au" or "ca" or "nz" or "ie" => "İngilizce",
+
+        "de" or "at" or "ch" => "Almanca",
+        "fr" or "be" => "Fransızca",
+        "it" => "İtalyanca",
+        "es" => "İspanyolca",
+        "pt" or "br" => "Portekizce",
+        "nl" => "Felemenkçe",
+
         "ru" => "Rusça",
-        "az" => "Azerice"
+        "ua" or "uk" => "Ukraynaca",
+        "pl" => "Lehçe (Polonca)",
+        "cz" or "cs" => "Çekçe",
+        "sk" => "Slovakça",
+        "bg" => "Bulgarca",
+        "ro" => "Romence",
+        "rs" or "sr" => "Sırpça",
+        "hr" => "Hırvatça",
+        "ba" or "bs" => "Boşnakça",
+
+        "se" or "sv" => "İsveççe",
+        "no" => "Norveççe",
+        "dk" or "da" => "Danca",
+        "fi" => "Fince",
+        "ee" or "et" => "Estonca",
+        "lv" => "Letonca",
+        "lt" => "Litvanca",
+
+        "gr" or "el" => "Yunanca",
+        "al" or "sq" => "Arnavutça",
+        "mk" => "Makedonca",
+        "hu" => "Macarca",
+
+        "ar" or "sa" or "ae" or "eg" or "qa" or "kw" => "Arapça",
+        "ir" or "fa" => "Farsça",
+        "il" or "he" => "İbranice",
+        "ge" or "ka" => "Gürcüce",
+        "am" or "hy" => "Ermenice",
+
+        "cn" or "zh" => "Çince",
+        "jp" or "ja" => "Japonca",
+        "kr" or "ko" => "Korece",
+        "in" or "hi" => "Hintçe",
+        "id" => "Endonezce",
+        "my" or "ms" => "Malayca",
+        "th" => "Tayca",
+        "vn" or "vi" => "Vietnamca",
+
+        null or "" => "Belirtilmedi",
+        _ => countryCode.ToUpperInvariant()
     };
 }
 

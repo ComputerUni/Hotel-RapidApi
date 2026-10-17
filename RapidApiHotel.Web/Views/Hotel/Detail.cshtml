@@ -1,7 +1,7 @@
-﻿@model RapidApiHotel.Web.Models.HotelDetailViewModel
-@using RapidApiHotel.Web.Models
+﻿@model HotelDetailViewModel
 
 @{
+    Layout = null;
     var d = Model.data;
     var raw = d.rawData;
     var price = d.product_price_breakdown;
@@ -9,32 +9,8 @@
 
 <!DOCTYPE html>
 <html lang="tr">
-<head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
-    <style>
-            @@layer base {
-                html, body {
-                    margin: 0;
-                    padding: 0;
-                }
-
-                body {
-                    overscroll-behavior: none;
-                }
-            }
-
-            ::-webkit-scrollbar {
-                display: none;
-            }
-    </style>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "tertiary-container": "#2f1500", "on-secondary-container": "#6a2500", "error": "#ba1a1a", "on-error": "#ffffff", "on-tertiary-container": "#c76c00", "on-primary": "#ffffff", "inverse-primary": "#c1c6d9", "soft-success": "#1E8A5A", "inverse-on-surface": "#f2f1ee", "secondary-container": "#fd844c", "on-secondary-fixed-variant": "#7d2d00", "on-surface": "#1a1c1a", "surface-variant": "#e3e2df", "pure-white": "#FFFFFF", "muted-stone": "#6E7582", "on-tertiary-fixed-variant": "#6e3900", "primary-fixed-dim": "#c1c6d9", "surface-container-lowest": "#ffffff", "primary-fixed": "#dde2f6", "surface-container-low": "#f4f3f0", "sand-surface": "#EFECE6", "surface-dim": "#dbdad7", "terracotta": "#C05621", "secondary": "#a14009", "slate-ink": "#121826", "surface": "#faf9f6", "tertiary-fixed": "#ffdcc3", "tertiary-fixed-dim": "#ffb77d", "outline": "#76777d", "on-background": "#1a1c1a", "on-tertiary": "#ffffff", "surface-container-highest": "#e3e2df", "primary": "#000000", "on-primary-fixed-variant": "#414756", "on-surface-variant": "#45464c", "on-secondary": "#ffffff", "on-primary-container": "#7e8395", "on-primary-fixed": "#151b29", "secondary-fixed": "#ffdbcd", "error-container": "#ffdad6", "soft-success-bg": "#EBF6F0", "surface-container": "#efeeeb", "background": "#faf9f6", "on-error-container": "#93000a", "outline-variant": "#c6c6cc", "sand-border": "#E4DFD5", "tertiary": "#000000", "inverse-surface": "#2f312f", "amber-gold": "#D97706", "slate-card": "#1E2538", "surface-tint": "#585e6f", "surface-container-high": "#e9e8e5", "secondary-fixed-dim": "#ffb596", "sand-canvas": "#F8F7F4", "primary-container": "#151b29", "surface-bright": "#faf9f6", "on-tertiary-fixed": "#2f1500", "on-secondary-fixed": "#360f00" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-2xl": "3rem", "space-3xl": "4.5rem", "gutter": "1.5rem", "space-2xs": "0.25rem", "margin-tablet": "2.5rem", "space-xs": "0.5rem", "space-lg": "1.5rem", "space-xl": "2rem", "space-4xl": "6rem", "space-md": "1rem", "margin": "1.25rem", "space-sm": "0.75rem", "margin-desktop": "4rem", "gutter-desktop": "2rem" }, "fontFamily": { "body-sm": ["Plus Jakarta Sans"], "price-hero": ["Plus Jakarta Sans"], "body-lead": ["Plus Jakarta Sans"], "headline-lg": ["Playfair Display"], "display-hero": ["Playfair Display"], "label-caps": ["Plus Jakarta Sans"], "headline-xl": ["Playfair Display"], "body-default": ["Plus Jakarta Sans"], "headline-xl-mobile": ["Playfair Display"], "label-md": ["Plus Jakarta Sans"], "display-hero-mobile": ["Playfair Display"], "headline-md": ["Playfair Display"], "headline-sm": ["Plus Jakarta Sans"], "label-lg": ["Plus Jakarta Sans"] }, "fontSize": { "body-sm": ["0.875rem", { "lineHeight": "1.375rem", "fontWeight": "400" }], "price-hero": ["1.75rem", { "lineHeight": "2rem", "letterSpacing": "-0.03em", "fontWeight": "800" }], "body-lead": ["1.125rem", { "lineHeight": "1.875rem", "fontWeight": "400" }], "headline-lg": ["1.625rem", { "lineHeight": "2.125rem", "letterSpacing": "-0.02em", "fontWeight": "600" }], "display-hero": ["3.25rem", { "lineHeight": "3.75rem", "letterSpacing": "-0.03em", "fontWeight": "600" }], "label-caps": ["0.6875rem", { "lineHeight": "1rem", "letterSpacing": "0.08em", "fontWeight": "700" }], "headline-xl": ["2.25rem", { "lineHeight": "2.75rem", "letterSpacing": "-0.025em", "fontWeight": "600" }], "body-default": ["1rem", { "lineHeight": "1.625rem", "fontWeight": "400" }], "headline-xl-mobile": ["1.75rem", { "lineHeight": "2.25rem", "letterSpacing": "-0.02em", "fontWeight": "600" }], "label-md": ["0.8125rem", { "lineHeight": "1.125rem", "fontWeight": "600" }], "display-hero-mobile": ["2.25rem", { "lineHeight": "2.75rem", "letterSpacing": "-0.02em", "fontWeight": "600" }], "headline-md": ["1.25rem", { "lineHeight": "1.75rem", "letterSpacing": "-0.015em", "fontWeight": "600" }], "headline-sm": ["1.125rem", { "lineHeight": "1.5rem", "letterSpacing": "-0.01em", "fontWeight": "700" }], "label-lg": ["0.9375rem", { "lineHeight": "1.25rem", "fontWeight": "600" }] } } } };</script>
-</head>
+@await Component.InvokeAsync("_HotelDetailHead")
 <body class="bg-surface font-body-default text-on-surface antialiased">
-
     <header class="fixed top-0 left-0 w-full z-50 bg-surface/90 backdrop-blur-xl shadow-[0_2px_12px_rgba(18,24,38,0.04)]">
         <div class="h-20 max-w-[1320px] mx-auto px-margin md:px-margin-tablet lg:px-margin-desktop flex items-center justify-between">
             <a asp-action="Index" asp-controller="Hotel" class="flex items-center gap-space-xs">
@@ -42,56 +18,25 @@
             </a>
         </div>
     </header>
-
     <main class="w-full pt-20 bg-surface min-h-[calc(100vh-20rem)]">
         <div class="flex flex-col w-full">
-
             @await Component.InvokeAsync("_HotelDetailHeader", new { data = Model })
-
             @await Component.InvokeAsync("_HotelDetailGallery", new { data = Model })
-
-            <div class="sticky top-20 z-40 bg-sand-canvas/95 backdrop-blur-md py-space-xs mb-space-xl shadow-sm">
-                <div class="max-w-[1320px] mx-auto px-margin md:px-margin-tablet lg:px-margin-desktop flex items-center justify-between overflow-x-auto gap-space-lg">
-                    <div class="flex items-center gap-space-md whitespace-nowrap font-label-md text-label-md">
-                        <a class="px-space-sm py-space-xs rounded-full bg-slate-ink text-pure-white" href="#genel-bakis">Genel Bakış</a>
-                        <a class="px-space-sm py-space-xs rounded-full text-slate-ink hover:bg-pure-white transition-colors" href="#ayricaliklar">Ayrıcalıklar</a>
-                        <a class="px-space-sm py-space-xs rounded-full text-slate-ink hover:bg-pure-white transition-colors" href="#musait-odalar">Müsait Odalar</a>
-                        <a class="px-space-sm py-space-xs rounded-full text-slate-ink hover:bg-pure-white transition-colors" href="#konum-harita">Konum Rehberi</a>
-                        <a class="px-space-sm py-space-xs rounded-full text-slate-ink hover:bg-pure-white transition-colors" href="#misafir-yorumlari">Değerlendirmeler</a>
-                    </div>
-                    <div class="hidden xl:flex items-center gap-space-sm">
-                        <div class="text-right">
-                            <span class="font-label-caps text-label-caps text-muted-stone block">Gecelik Başlayan</span>
-                            <span class="font-headline-sm text-headline-sm text-slate-ink font-bold">@price?.gross_amount_per_night?.amount_rounded @price?.gross_amount_per_night?.currency</span>
-                        </div>
-                        <a class="px-space-md py-space-xs rounded-lg bg-terracotta text-pure-white font-label-md text-label-md hover:bg-slate-ink transition-colors shadow-sm" href="#musait-odalar">Oda Seç</a>
-                    </div>
-                </div>
-            </div>
-
+            @await Component.InvokeAsync("_HotelDetailAvailableRoomPrice", new { data = Model })
             <div class="max-w-[1320px] w-full mx-auto px-margin md:px-margin-tablet lg:px-margin-desktop mb-space-4xl">
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-start">
-
                     <div class="lg:col-span-8 flex flex-col gap-space-3xl min-w-0">
-
                         @await Component.InvokeAsync("_HotelDetailOverview", new { data = Model })
-
                         @await Component.InvokeAsync("_HotelDetailGallery", new { data = Model })
-
                         @await Component.InvokeAsync("_HotelDetailFacilities", new { data = Model })
-
                         @await Component.InvokeAsync("_HotelDetailAvailableRooms", new { data = Model })
-
                         @await Component.InvokeAsync("_HotelDetailLocation", new { data = Model })
-
                         @await Component.InvokeAsync("_HotelDetailReviews", new { data = Model })
                     </div>
-
                     @await Component.InvokeAsync("_HotelDetailReservationSummary", new { data = Model })
                 </div>
             </div>
         </div>
     </main>
-
 </body>
 </html>

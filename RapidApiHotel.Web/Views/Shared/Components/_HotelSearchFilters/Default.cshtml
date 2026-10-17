@@ -1,0 +1,69 @@
+﻿<section class="w-full bg-sand-surface py-space-md">
+    <div class="max-w-[1320px] mx-auto px-margin md:px-margin-tablet lg:px-margin-desktop">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+            <div>
+                <div class="flex items-center gap-space-xs mb-1">
+                    <span class="px-space-xs py-0.5 rounded-full bg-slate-ink text-pure-white font-label-caps text-label-caps">ARAMA SONUÇLARI</span>
+                    <span class="font-body-sm text-body-sm text-muted-stone">Küratör Onaylı Tesisler</span>
+                </div>
+                <h1 class="font-headline-xl text-headline-xl text-slate-ink tracking-tight">
+                    Öne Çıkan <span class="italic font-normal text-terracotta">Seçkin</span> Konaklama Noktaları
+                </h1>
+            </div>
+            <div class="text-left sm:text-right">
+                <span class="font-label-caps text-label-caps text-muted-stone block uppercase tracking-wider">LİSTELEME DURUMU</span>
+                <span class="font-label-md text-label-md text-slate-ink font-semibold">Tüm Tesisler Müsaitlik Sırasına Göre</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="w-full bg-pure-white py-space-sm sticky top-20 z-30 shadow-sm border-b border-sand-border/40">
+    <div class="max-w-[1320px] mx-auto px-margin md:px-margin-tablet lg:px-margin-desktop">
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-space-sm">
+
+            <div class="flex items-center gap-space-xs overflow-x-auto no-scrollbar py-0.5">
+                <span class="font-label-caps text-label-caps text-muted-stone uppercase whitespace-nowrap">Hızlı Filtre:</span>
+
+                <button class="px-space-sm py-1 rounded-full bg-slate-ink text-pure-white font-label-md text-label-md whitespace-nowrap transition-colors" type="button">
+                    Tümü
+                </button>
+                <button class="px-space-sm py-1 rounded-full bg-sand-surface text-slate-ink hover:bg-sand-border transition-colors font-label-md text-label-md whitespace-nowrap" type="button">
+                    ⭐ 9.0+ Olağanüstü
+                </button>
+                <button class="px-space-sm py-1 rounded-full bg-sand-surface text-slate-ink hover:bg-sand-border transition-colors font-label-md text-label-md whitespace-nowrap" type="button">
+                    8.0+ Çok İyi
+                </button>
+                <button class="px-space-sm py-1 rounded-full bg-sand-surface text-slate-ink hover:bg-sand-border transition-colors font-label-md text-label-md whitespace-nowrap" type="button">
+                    Kahvaltı Dahil
+                </button>
+                <button class="px-space-sm py-1 rounded-full bg-sand-surface text-slate-ink hover:bg-sand-border transition-colors font-label-md text-label-md whitespace-nowrap" type="button">
+                    Ücretsiz İptal
+                </button>
+            </div>
+
+            <div class="flex items-center justify-end gap-space-sm">
+                <div class="relative flex items-center bg-sand-canvas rounded-lg px-space-sm py-1.5">
+                    <span class="font-label-caps text-label-caps text-muted-stone mr-space-xs hidden md:inline">SIRALA:</span>
+                    <select aria-label="Sonuç Sıralama" class="bg-transparent font-label-md text-label-md text-slate-ink focus:outline-none cursor-pointer pr-space-md">
+                        <option selected value="curator">Küratörün Seçimi (Tavsiye)</option>
+                        <option value="price_asc">Fiyat: Düşükten Yükseğe</option>
+                        <option value="price_desc">Fiyat: Yüksekten Düşüğe</option>
+                        <option value="rating_desc">En Yüksek Puan</option>
+                    </select>
+                    <span class="material-symbols-outlined text-[16px] text-muted-stone absolute right-2 pointer-events-none">expand_more</span>
+                </div>
+
+                <div class="flex items-center bg-sand-canvas rounded-lg p-0.5">
+                    <button class="p-1.5 rounded-md bg-pure-white text-slate-ink shadow-sm" title="Liste Görünümü" type="button">
+                        <span class="material-symbols-outlined text-[18px]">view_agenda</span>
+                    </button>
+                    <button class="p-1.5 rounded-md text-muted-stone hover:text-slate-ink transition-colors" title="Kare Görünümü" type="button">
+                        <span class="material-symbols-outlined text-[18px]">grid_view</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

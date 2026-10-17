@@ -1,0 +1,25 @@
+﻿@model HotelDetailViewModel
+@{
+    var d = Model.data;
+    var price = d.product_price_breakdown;
+}
+
+
+<div class="sticky top-20 z-40 bg-sand-canvas/95 backdrop-blur-md py-space-xs mb-space-xl shadow-sm">
+    <div class="max-w-[1320px] mx-auto px-margin md:px-margin-tablet lg:px-margin-desktop flex items-center justify-between overflow-x-auto gap-space-lg">
+        <div class="flex items-center gap-space-md whitespace-nowrap font-label-md text-label-md">
+            <a class="px-space-sm py-space-xs rounded-full bg-slate-ink text-pure-white" href="#genel-bakis">Genel Bakış</a>
+            <a class="px-space-sm py-space-xs rounded-full text-slate-ink hover:bg-pure-white transition-colors" href="#ayricaliklar">Ayrıcalıklar</a>
+            <a class="px-space-sm py-space-xs rounded-full text-slate-ink hover:bg-pure-white transition-colors" href="#musait-odalar">Müsait Odalar</a>
+            <a class="px-space-sm py-space-xs rounded-full text-slate-ink hover:bg-pure-white transition-colors" href="#konum-harita">Konum Rehberi</a>
+            <a class="px-space-sm py-space-xs rounded-full text-slate-ink hover:bg-pure-white transition-colors" href="#misafir-yorumlari">Değerlendirmeler</a>
+        </div>
+        <div class="hidden xl:flex items-center gap-space-sm">
+            <div class="text-right">
+                <span class="font-label-caps text-label-caps text-muted-stone block">Gecelik Başlayan</span>
+                <span class="font-headline-sm text-headline-sm text-slate-ink font-bold">@price?.gross_amount_per_night?.amount_rounded @price?.gross_amount_per_night?.currency</span>
+            </div>
+            <a class="px-space-md py-space-xs rounded-lg bg-terracotta text-pure-white font-label-md text-label-md hover:bg-slate-ink transition-colors shadow-sm" href="#musait-odalar">Oda Seç</a>
+        </div>
+    </div>
+</div>

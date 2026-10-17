@@ -1,0 +1,146 @@
+﻿<section class="relative w-full overflow-hidden bg-sand-canvas pb-space-3xl lg:pb-space-4xl">
+    <div class="relative max-w-[1320px] mx-auto px-margin md:px-margin-tablet lg:px-margin-desktop pt-space-xl lg:pt-space-2xl">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-xs mb-space-lg">
+            <div class="font-label-caps text-label-caps text-muted-stone flex items-center gap-space-xs">
+                <span>N° 44.8372° K</span>
+                <span class="text-terracotta">/</span>
+                <span>11.3426° D</span>
+                <span class="hidden md:inline text-outline-variant">·</span>
+                <span class="hidden md:inline">52 ÜLKEDE 4.800+ OTEL</span>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-end mb-space-2xl">
+            <div class="lg:col-span-8">
+                <h1 class="font-display-hero text-display-hero text-slate-ink leading-none">
+                    Dünyanın En Seçkin <br class="hidden sm:inline" />
+                    <span class="italic font-normal font-headline-xl text-terracotta">Konaklama</span> Koleksiyonu
+                </h1>
+            </div>
+            <div class="lg:col-span-4 lg:pb-space-xs">
+                <p class="font-body-lead text-body-lead text-muted-stone">
+                    Özenle seçilmiş butik oteller, mimari şaheserler ve unutulmaz anlar için küratörlü, rafine kaçış noktaları.
+                </p>
+            </div>
+        </div>
+        <form method="post" asp-action="Index" asp-controller="Hotel">
+            @Html.AntiForgeryToken()
+            <div class="relative z-20 bg-pure-white rounded-2xl shadow-xl p-space-xs border border-sand-border/40">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-space-2xs items-center">
+                    <div class="relative md:col-span-4 p-space-sm rounded-xl hover:bg-surface-container-low transition-colors group">
+                        <div class="flex items-center gap-space-xs">
+                            <span class="material-symbols-outlined text-terracotta text-[24px] shrink-0">explore</span>
+                            <div class="flex-1 min-w-0">
+                                <span class="block font-label-caps text-label-caps text-muted-stone uppercase tracking-wider">Destinasyon veya Mülk</span>
+                                <input type="text" name="city_name" placeholder="Şehir ara... (örn: Istanbul)" required
+                                       class="block font-headline-sm text-headline-sm text-slate-ink bg-transparent border-none outline-none w-full truncate p-0" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative md:col-span-4 p-space-sm rounded-xl hover:bg-surface-container-low transition-colors">
+                        <div class="flex items-center gap-space-xs">
+                            <span class="material-symbols-outlined text-terracotta text-[24px] shrink-0">calendar_month</span>
+                            <div class="flex-1 min-w-0">
+                                <span class="block font-label-caps text-label-caps text-muted-stone uppercase tracking-wider">Giriş — Çıkış</span>
+                                <div class="flex items-center justify-between gap-2 w-full">
+                                    <input type="date" name="arrival_date" required
+                                           class="text-xs sm:text-sm font-medium text-slate-ink bg-transparent border-none outline-none w-full min-w-0 p-0 cursor-pointer [&::-webkit-calendar-picker-indicator]:hidden" />
+                                    <span class="text-muted-stone text-xs shrink-0 px-1">→</span>
+                                    <input type="date" name="departure_date" required
+                                           class="text-xs sm:text-sm font-medium text-slate-ink bg-transparent border-none outline-none w-full min-w-0 p-0 cursor-pointer [&::-webkit-calendar-picker-indicator]:hidden" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative md:col-span-3 p-space-sm rounded-xl hover:bg-surface-container-low transition-colors group cursor-pointer"
+                         onclick="toggleDropdown('guests-popover')">
+                        <div class="flex items-center gap-space-xs">
+                            <span class="material-symbols-outlined text-terracotta text-[24px] shrink-0">airline_seat_individual_suite</span>
+                            <div class="flex-1 min-w-0">
+                                <span class="block font-label-caps text-label-caps text-muted-stone uppercase tracking-wider">Konuklar &amp; Odalar</span>
+                                <span class="block text-sm font-medium text-slate-ink whitespace-nowrap truncate" id="guests-summary">
+                                    2 Yetişkin, 0 Çocuk · 1 Oda
+                                </span>
+                            </div>
+                            <span class="material-symbols-outlined text-muted-stone group-hover:translate-x-0.5 transition-transform text-[18px] shrink-0">keyboard_arrow_down</span>
+                        </div>
+
+                        <div class="hidden absolute top-full right-0 mt-2 bg-pure-white rounded-2xl shadow-2xl p-4 z-50 border border-sand-border/60 w-auto min-w-[520px]"
+                             id="guests-popover"
+                             onclick="event.stopPropagation();">
+
+                            <div class="grid grid-cols-3 divide-x divide-sand-border/40 gap-space-sm items-center">
+                                <div class="flex flex-col items-center text-center px-2">
+                                    <span class="font-label-md text-label-md text-slate-ink font-semibold">Yetişkinler</span>
+                                    <span class="text-[11px] text-muted-stone mb-2">13+ yaş</span>
+                                    <div class="flex items-center gap-1.5 bg-sand-canvas p-1 rounded-full">
+                                        <button onclick="changeCount('adults', -1); event.stopPropagation();"
+                                                class="w-7 h-7 rounded-full bg-pure-white hover:bg-slate-ink hover:text-pure-white transition-colors flex items-center justify-center font-bold text-slate-ink text-sm shadow-sm" type="button">
+                                            -
+                                        </button>
+                                        <input type="number" id="adults" name="adults" value="2" min="1" max="10"
+                                               class="font-headline-sm text-slate-ink w-6 text-center bg-transparent border-none outline-none font-bold p-0 text-sm" readonly />
+                                        <button onclick="changeCount('adults', 1); event.stopPropagation();"
+                                                class="w-7 h-7 rounded-full bg-pure-white hover:bg-slate-ink hover:text-pure-white transition-colors flex items-center justify-center font-bold text-slate-ink text-sm shadow-sm" type="button">
+                                            +
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col items-center text-center px-2">
+                                    <span class="font-label-md text-label-md text-slate-ink font-semibold">Çocuklar</span>
+                                    <span class="text-[11px] text-muted-stone mb-2">0-12 yaş</span>
+                                    <div class="flex items-center gap-1.5 bg-sand-canvas p-1 rounded-full">
+                                        <button onclick="changeCount('children', -1); event.stopPropagation();"
+                                                class="w-7 h-7 rounded-full bg-pure-white hover:bg-slate-ink hover:text-pure-white transition-colors flex items-center justify-center font-bold text-slate-ink text-sm shadow-sm" type="button">
+                                            -
+                                        </button>
+                                        <input type="number" id="children" name="children" value="0" min="0" max="6"
+                                               class="font-headline-sm text-slate-ink w-6 text-center bg-transparent border-none outline-none font-bold p-0 text-sm" readonly />
+                                        <button onclick="changeCount('children', 1); event.stopPropagation();"
+                                                class="w-7 h-7 rounded-full bg-pure-white hover:bg-slate-ink hover:text-pure-white transition-colors flex items-center justify-center font-bold text-slate-ink text-sm shadow-sm" type="button">
+                                            +
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col items-center text-center px-2">
+                                    <span class="font-label-md text-label-md text-slate-ink font-semibold">Odalar</span>
+                                    <span class="text-[11px] text-muted-stone mb-2">Oda sayısı</span>
+                                    <div class="flex items-center gap-1.5 bg-sand-canvas p-1 rounded-full">
+                                        <button onclick="changeCount('room_qty', -1); event.stopPropagation();"
+                                                class="w-7 h-7 rounded-full bg-pure-white hover:bg-slate-ink hover:text-pure-white transition-colors flex items-center justify-center font-bold text-slate-ink text-sm shadow-sm" type="button">
+                                            -
+                                        </button>
+                                        <input type="number" id="room_qty" name="room_qty" value="1" min="1" max="5"
+                                               class="font-headline-sm text-slate-ink w-6 text-center bg-transparent border-none outline-none font-bold p-0 text-sm" readonly />
+                                        <button onclick="changeCount('room_qty', 1); event.stopPropagation();"
+                                                class="w-7 h-7 rounded-full bg-pure-white hover:bg-slate-ink hover:text-pure-white transition-colors flex items-center justify-center font-bold text-slate-ink text-sm shadow-sm" type="button">
+                                            +
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <input type="hidden" name="children_age" id="children_age" value="" />
+                        </div>
+                    </div>
+
+                    <div class="relative md:col-span-1 flex items-center justify-end gap-1.5 p-space-2xs">
+                        <div class="relative">
+                            <select name="currency_code" class="appearance-none bg-surface-container-low font-label-caps text-label-caps text-slate-ink py-2.5 pl-2 pr-5 rounded-xl cursor-pointer focus:outline-none text-xs">
+                                <option value="EUR">EUR</option>
+                                <option value="USD">USD</option>
+                                <option value="TRY">TRY</option>
+                                <option value="GBP">GBP</option>
+                            </select>
+                            <span class="material-symbols-outlined text-[14px] text-muted-stone absolute right-1 top-1/2 -translate-y-1/2 pointer-events-none">unfold_more</span>
+                        </div>
+                        <button type="submit" title="Otel Ara" class="w-11 h-11 shrink-0 bg-slate-ink text-pure-white hover:bg-terracotta rounded-xl transition-all duration-200 flex items-center justify-center shadow-md group">
+                            <span class="material-symbols-outlined text-[22px] group-hover:scale-110 transition-transform">search</span>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
