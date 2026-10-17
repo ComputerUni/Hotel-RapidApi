@@ -3,7 +3,7 @@
     var d = Model.data;
     var raw = d.rawData;
 
-    var photos = raw?.photoUrls?.Select(p => p.Replace("square60", "max1280").Replace("max300", "max1280")).ToArray();
+    var photos = raw?.photoUrls?.Select(p => p.Replace("square60", "max1280").Replace("max300", "max1280")).ToArray() ?? Array.Empty<string>();
     var totalPhotos = photos.Length;
     var mainPhoto = totalPhotos > 0 ? photos[0] : "";
 }

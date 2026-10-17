@@ -13,9 +13,6 @@
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm bg-pure-white p-space-md rounded-xl shadow-sm">
         <div class="flex items-center gap-space-sm">
             <div class="w-2.5 h-2.5 rounded-full bg-soft-success"></div>
-            <p class="font-body-sm text-body-sm text-slate-ink">
-                Seçili kriterlerle eşleşen <span class="font-bold text-slate-ink">84</span> mükemmel konaklama noktası
-            </p>
         </div>
         <div class="flex items-center gap-space-xs text-muted-stone font-label-caps text-label-caps">
             <span class="material-symbols-outlined text-[16px]">info</span>
@@ -31,15 +28,32 @@
         @foreach (var hotel in Model.data.hotels)
         {
             var prop = hotel.property;
+            var badges = prop.priceBreakdown?.benefitBadges;
+
+            bool hasBreakfast = badges != null && badges.Any(b =>
+                !string.IsNullOrEmpty(b.text) &&
+                (b.text.IndexOf("breakfast", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                 b.text.IndexOf("kahvaltı", StringComparison.OrdinalIgnoreCase) >= 0));
+
+            bool hasFreeCancel = badges != null && badges.Any(b =>
+                !string.IsNullOrEmpty(b.text) &&
+                (b.text.IndexOf("cancellation", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                 b.text.IndexOf("iptal", StringComparison.OrdinalIgnoreCase) >= 0));
+
+            var formattedScore = (prop.reviewScore > 0)
+                ? prop.reviewScore.ToString("0.0", System.Globalization.CultureInfo.InvariantCulture)
+                : "0.0";
 
             var scoreWord = prop.reviewScoreWord switch
             {
                 "Good" => "İyi",
                 "Very Good" => "Çok İyi",
+                "Very good" => "Çok İyi",
                 "Fabulous" => "Harika",
                 "Superb" => "Mükemmel",
                 "Exceptional" => "Olağanüstü",
                 "Pleasant" => "Hoş",
+                "Bad" => "Kötü",
                 "Fair" => "Orta",
                 _ => prop.reviewScoreWord
             };
@@ -55,7 +69,12 @@
             };
 
 
-            <article class="bg-pure-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col md:flex-row group">
+            <article class="hotel-card bg-pure-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col md:flex-row group"
+                     data-price="@((int)(prop.priceBreakdown?.grossPrice?.value ?? 0))"
+                     data-stars="@prop.accuratePropertyClass"
+                     data-score="@prop.reviewScore.ToString("O.0", System.Globalization.CultureInfo.InvariantCulture)"
+                     data-breakfast="@(hasBreakfast ? "true" : "false")"
+                     data-freecancel="@(hasFreeCancel ? "true" : "false")">
                 <div class="md:w-80 relative flex-shrink-0 bg-sand-surface overflow-hidden">
                     <img class="w-full h-64 md:h-full object-cover group-hover:scale-105 transition-transform duration-700"
                          alt="@prop.name"

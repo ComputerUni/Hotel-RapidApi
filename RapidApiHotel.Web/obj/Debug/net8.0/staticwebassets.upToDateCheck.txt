@@ -1,5 +1,8 @@
 wwwroot\css\site.css
 wwwroot\favicon.ico
+wwwroot\hotel_temp\home-page.html
+wwwroot\hotel_temp\hotel-detail.html
+wwwroot\hotel_temp\hotel-list.html
 wwwroot\js\site.js
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map
@@ -58,6 +61,3 @@ wwwroot\lib\jquery\dist\jquery.js
 wwwroot\lib\jquery\dist\jquery.min.js
 wwwroot\lib\jquery\dist\jquery.min.map
 wwwroot\lib\jquery\LICENSE.txt
-wwwroot\hotel_temp\home-page.html
-wwwroot\hotel_temp\hotel-detail.html
-wwwroot\hotel_temp\hotel-list.html

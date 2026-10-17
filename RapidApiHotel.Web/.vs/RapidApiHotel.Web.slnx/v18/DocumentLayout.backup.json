@@ -5,30 +5,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{C8E873C8-B62A-ED7D-289F-89CF05B9A05B}|RapidApiHotel.Web.csproj|c:\\users\\burhan\\desktop\\hotelrapidapi\\rapidapihotel.web\\views\\hotel\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{C8E873C8-B62A-ED7D-289F-89CF05B9A05B}|RapidApiHotel.Web.csproj|solutionrelative:views\\hotel\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C8E873C8-B62A-ED7D-289F-89CF05B9A05B}|RapidApiHotel.Web.csproj|c:\\users\\burhan\\desktop\\hotelrapidapi\\rapidapihotel.web\\controllers\\hotelcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C8E873C8-B62A-ED7D-289F-89CF05B9A05B}|RapidApiHotel.Web.csproj|solutionrelative:controllers\\hotelcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C8E873C8-B62A-ED7D-289F-89CF05B9A05B}|RapidApiHotel.Web.csproj|c:\\users\\burhan\\desktop\\hotelrapidapi\\rapidapihotel.web\\views\\shared\\components\\_hotelsearchmainresults\\default.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{C8E873C8-B62A-ED7D-289F-89CF05B9A05B}|RapidApiHotel.Web.csproj|solutionrelative:views\\shared\\components\\_hotelsearchmainresults\\default.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C8E873C8-B62A-ED7D-289F-89CF05B9A05B}|RapidApiHotel.Web.csproj|c:\\users\\burhan\\desktop\\hotelrapidapi\\rapidapihotel.web\\views\\shared\\components\\_hoteldetailreviews\\default.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{C8E873C8-B62A-ED7D-289F-89CF05B9A05B}|RapidApiHotel.Web.csproj|solutionrelative:views\\shared\\components\\_hoteldetailreviews\\default.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C8E873C8-B62A-ED7D-289F-89CF05B9A05B}|RapidApiHotel.Web.csproj|c:\\users\\burhan\\desktop\\hotelrapidapi\\rapidapihotel.web\\views\\shared\\components\\_hoteldetailoverview\\default.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{C8E873C8-B62A-ED7D-289F-89CF05B9A05B}|RapidApiHotel.Web.csproj|solutionrelative:views\\shared\\components\\_hoteldetailoverview\\default.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C8E873C8-B62A-ED7D-289F-89CF05B9A05B}|RapidApiHotel.Web.csproj|c:\\users\\burhan\\desktop\\hotelrapidapi\\rapidapihotel.web\\viewcomponents\\_hotelsearchviewcomponents\\_hotelsearchmainresultsviewcomponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C8E873C8-B62A-ED7D-289F-89CF05B9A05B}|RapidApiHotel.Web.csproj|solutionrelative:viewcomponents\\_hotelsearchviewcomponents\\_hotelsearchmainresultsviewcomponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C8E873C8-B62A-ED7D-289F-89CF05B9A05B}|RapidApiHotel.Web.csproj|c:\\users\\burhan\\desktop\\hotelrapidapi\\rapidapihotel.web\\views\\hotel\\search.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{C8E873C8-B62A-ED7D-289F-89CF05B9A05B}|RapidApiHotel.Web.csproj|solutionrelative:views\\hotel\\search.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,7 +14,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 592,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -55,83 +31,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{a80febb4-e7e0-4147-b476-21aaf2453969}"
-            }
-          ]
-        },
-        {
-          "DockedWidth": 592,
-          "SelectedChildIndex": 0,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "HotelController.cs",
-              "DocumentMoniker": "C:\\Users\\BURHAN\\Desktop\\HotelRapidApi\\RapidApiHotel.Web\\Controllers\\HotelController.cs",
-              "RelativeDocumentMoniker": "Controllers\\HotelController.cs",
-              "ToolTip": "C:\\Users\\BURHAN\\Desktop\\HotelRapidApi\\RapidApiHotel.Web\\Controllers\\HotelController.cs",
-              "RelativeToolTip": "Controllers\\HotelController.cs",
-              "ViewState": "AgIAAHEAAAAAAAAAAAAcwJEAAABfAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-17T11:26:30.802Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "_HotelSearchMainResultsViewComponent.cs",
-              "DocumentMoniker": "C:\\Users\\BURHAN\\Desktop\\HotelRapidApi\\RapidApiHotel.Web\\ViewComponents\\_HotelSearchViewComponents\\_HotelSearchMainResultsViewComponent.cs",
-              "RelativeDocumentMoniker": "ViewComponents\\_HotelSearchViewComponents\\_HotelSearchMainResultsViewComponent.cs",
-              "ToolTip": "C:\\Users\\BURHAN\\Desktop\\HotelRapidApi\\RapidApiHotel.Web\\ViewComponents\\_HotelSearchViewComponents\\_HotelSearchMainResultsViewComponent.cs",
-              "RelativeToolTip": "ViewComponents\\_HotelSearchViewComponents\\_HotelSearchMainResultsViewComponent.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-17T11:16:57.161Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Default.cshtml",
-              "DocumentMoniker": "C:\\Users\\BURHAN\\Desktop\\HotelRapidApi\\RapidApiHotel.Web\\Views\\Shared\\Components\\_HotelSearchMainResults\\Default.cshtml",
-              "RelativeDocumentMoniker": "Views\\Shared\\Components\\_HotelSearchMainResults\\Default.cshtml",
-              "ToolTip": "C:\\Users\\BURHAN\\Desktop\\HotelRapidApi\\RapidApiHotel.Web\\Views\\Shared\\Components\\_HotelSearchMainResults\\Default.cshtml",
-              "RelativeToolTip": "Views\\Shared\\Components\\_HotelSearchMainResults\\Default.cshtml",
-              "ViewState": "AgIAAMgAAAAAAAAAAAAAwNgAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-10-17T11:10:45.67Z",
-              "EditorCaption": ""
-            }
-          ]
-        },
-        {
-          "DockedWidth": 592,
-          "SelectedChildIndex": 2,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Default.cshtml",
-              "DocumentMoniker": "C:\\Users\\BURHAN\\Desktop\\HotelRapidApi\\RapidApiHotel.Web\\Views\\Shared\\Components\\_HotelDetailReviews\\Default.cshtml",
-              "RelativeDocumentMoniker": "Views\\Shared\\Components\\_HotelDetailReviews\\Default.cshtml",
-              "ToolTip": "C:\\Users\\BURHAN\\Desktop\\HotelRapidApi\\RapidApiHotel.Web\\Views\\Shared\\Components\\_HotelDetailReviews\\Default.cshtml",
-              "RelativeToolTip": "Views\\Shared\\Components\\_HotelDetailReviews\\Default.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-10-17T13:02:41.09Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Default.cshtml",
-              "DocumentMoniker": "C:\\Users\\BURHAN\\Desktop\\HotelRapidApi\\RapidApiHotel.Web\\Views\\Shared\\Components\\_HotelDetailOverview\\Default.cshtml",
-              "RelativeDocumentMoniker": "Views\\Shared\\Components\\_HotelDetailOverview\\Default.cshtml",
-              "ToolTip": "C:\\Users\\BURHAN\\Desktop\\HotelRapidApi\\RapidApiHotel.Web\\Views\\Shared\\Components\\_HotelDetailOverview\\Default.cshtml",
-              "RelativeToolTip": "Views\\Shared\\Components\\_HotelDetailOverview\\Default.cshtml",
-              "ViewState": "AgIAABUAAAAAAAAAAAAAADgAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-10-17T13:01:01.999Z",
-              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -143,20 +42,7 @@
               "RelativeToolTip": "Views\\Hotel\\Index.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAEoAAAAHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-10-17T12:50:45.436Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Search.cshtml",
-              "DocumentMoniker": "C:\\Users\\BURHAN\\Desktop\\HotelRapidApi\\RapidApiHotel.Web\\Views\\Hotel\\Search.cshtml",
-              "RelativeDocumentMoniker": "Views\\Hotel\\Search.cshtml",
-              "ToolTip": "C:\\Users\\BURHAN\\Desktop\\HotelRapidApi\\RapidApiHotel.Web\\Views\\Hotel\\Search.cshtml",
-              "RelativeToolTip": "Views\\Hotel\\Search.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADgAAAAHAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-10-17T12:22:56.143Z",
+              "WhenOpened": "2026-10-17T17:19:02.324Z",
               "EditorCaption": ""
             }
           ]

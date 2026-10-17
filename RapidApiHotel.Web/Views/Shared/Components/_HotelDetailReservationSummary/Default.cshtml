@@ -6,7 +6,8 @@
     var scoreBreakdown = Model.hotelReviewScores?.data?.FirstOrDefault()?.score_breakdown?.FirstOrDefault();
     var questions = scoreBreakdown?.question?.Where(x => x.score != null).Take(4).ToList() ?? new();
 
-    var countryCode = Model.hotelReviewTips.data.result.FirstOrDefault().author.countrycode.ToLowerInvariant();
+    var rawCode = Model?.hotelReviewTips?.data?.result?.FirstOrDefault()?.author?.countrycode;
+    var countryCode = rawCode?.Trim().ToLowerInvariant();
 
     var countryName = countryCode switch
     {

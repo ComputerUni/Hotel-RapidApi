@@ -17,19 +17,25 @@
     var scoreBreakdown = Model.hotelReviewScores?.data?.FirstOrDefault()?.score_breakdown?.FirstOrDefault();
     var questions = scoreBreakdown?.question?.Where(x => x.score != null).Take(4).ToList() ?? new();
 
-    var countryCode = Model.hotelReviewTips.data.result.FirstOrDefault().author.countrycode.ToLowerInvariant();
+    var rawReview = Model?.hotelReviewTips?.data?.result?.FirstOrDefault();
+    var rawCode = rawReview?.author?.countrycode;
+    var countryCode = rawCode?.Trim().ToLowerInvariant();
 
     var countryName = countryCode switch
     {
         "tr" => "Türkiye",
+        "it" => "İtalya",
         "gb" => "Birleşik Krallık",
         "de" => "Almanya",
         "us" => "ABD",
         "ru" => "Rusya",
         "az" => "Azerbaycan",
         "ge" => "Gürcistan",
-        "nl" => "Flemenkçe",
-        _ => countryCode.ToUpper() ?? ""
+        "nl" => "Hollanda",
+        "fr" => "Fransa",
+        "es" => "İspanya",
+        null or "" => "",
+        _ => countryCode.ToUpperInvariant()
     };
 }
 

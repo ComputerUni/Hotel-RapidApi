@@ -50,6 +50,79 @@
                             });
                         }
                     })();
+
+                    function applyFilters() {
+                        const minPrice = parseFloat(document.getElementById('filterMinPrice')?.value) || 0;
+                        const maxPrice = parseFloat(document.getElementById('filterMaxPrice')?.value) || Infinity;
+
+                        const selectedStars = Array.from(document.querySelectorAll('.star-filter:checked')).map(cb => parseInt(cb.value));
+                        const selectedScores = Array.from(document.querySelectorAll('.score-filter:checked')).map(cb => parseFloat(cb.value));
+                        const minScore = selectedScores.length > 0 ? Math.min(...selectedScores) : 0;
+
+                        const reqBreakfast = document.getElementById('filterBreakfast')?.checked || false;
+                        const reqFreeCancel = document.getElementById('filterFreeCancel')?.checked || false;
+
+                        const cards = document.querySelectorAll('.hotel-card');
+                        let visibleCount = 0;
+
+                        cards.forEach(card => {
+                            const price = parseFloat(card.dataset.price) || 0;
+                            const stars = parseInt(card.dataset.stars) || 0;
+                            const score = parseFloat(card.dataset.score) || 0;
+                            const hasBreakfast = card.dataset.breakfast == "true";
+                            const hasFreeCancel = card.dataset.freecancel == "true";
+
+                            let matches = true;
+                            if(price < minPrice || price > maxPrice) matches = false;
+                            if(selectedStars.length > 0 && !selectedStars.includes(stars)) matches = false;
+                            if(score < minScore) matches = false;
+                            if(reqBreakfast && !hasBreakfast) matches = false;
+                            if(reqFreeCancel && !hasFreeCancel) matches = false;
+
+                            if(matches) {
+                                card.style.display = "flex";
+                                visibleCount++;
+                            } else {
+                                card.style.display = "none";
+                            }
+                            
+                        });
+                    }
+
+                    function resetFilters() {
+                        if (document.getElementById('filterMinPrice')) document.getElementById('filterMinPrice').value = '';
+                        if (document.getElementById('filterMaxPrice')) document.getElementById('filterMaxPrice').value = '';
+
+                        document.querySelectorAll('.star-filter, .score-filter').forEach(cb => cb.checked = false);
+                        if (document.getElementById('filterBreakfast')) document.getElementById('filterBreakfast').checked = false;
+                        if (document.getElementById('filterFreeCancel')) document.getElementById('filterFreeCancel').checked = false;
+
+                        applyFilters();
+                    }
+
+                function sortCards() {
+                    const sortType = document.getElementById('sortHotels')?.value;
+                    const firstCard = document.querySelector('.hotel-card');
+                    if (!firstCard) return;
+
+                    const container = firstCard.parentElement;
+                    const cards = Array.from(container.querySelectorAll('.hotel-card'));
+
+                    if (sortType === 'price_asc') {
+                        cards.sort((a, b) => (parseFloat(a.dataset.price) || 0) - (parseFloat(b.dataset.price) || 0));
+                    } else if (sortType === 'price_desc') {
+                        cards.sort((a, b) => (parseFloat(b.dataset.price) || 0) - (parseFloat(a.dataset.price) || 0));
+                    } else if (sortType === 'rating_desc' || sortType === 'score_desc') {
+                        cards.sort((a, b) => (parseFloat(b.dataset.score) || 0) - (parseFloat(a.dataset.score) || 0));
+                    }      
+
+                    cards.forEach(card => container.appendChild(card));
+
+                    const pagination = container.querySelector('nav')?.closest('.pt-space-xl') || container.querySelector('.pagination-wrapper');
+                    if (pagination) {
+                        container.appendChild(pagination);
+                    }
+                }
         </script>
     </main>
     @await Component.InvokeAsync("_HotelSearchFooter")

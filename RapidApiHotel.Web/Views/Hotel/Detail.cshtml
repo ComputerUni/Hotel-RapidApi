@@ -2,9 +2,9 @@
 
 @{
     Layout = null;
-    var d = Model.data;
-    var raw = d.rawData;
-    var price = d.product_price_breakdown;
+    var d = Model?.data;
+    var raw = d?.rawData;
+    var price = d?.product_price_breakdown;
 }
 
 <!DOCTYPE html>
@@ -27,7 +27,6 @@
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-start">
                     <div class="lg:col-span-8 flex flex-col gap-space-3xl min-w-0">
                         @await Component.InvokeAsync("_HotelDetailOverview", new { data = Model })
-                        @await Component.InvokeAsync("_HotelDetailGallery", new { data = Model })
                         @await Component.InvokeAsync("_HotelDetailFacilities", new { data = Model })
                         @await Component.InvokeAsync("_HotelDetailAvailableRooms", new { data = Model })
                         @await Component.InvokeAsync("_HotelDetailLocation", new { data = Model })

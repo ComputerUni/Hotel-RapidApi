@@ -4,8 +4,12 @@
     var d = Model.data;
     var raw = d.rawData;
 
-    var hotelDesc = Model.hotelDescriptionAndInfo.data.FirstOrDefault(x => x.languagecode == "tr")?.description ?? Model.hotelDescriptionAndInfo?.data?.FirstOrDefault()?.description;
-    var countryCode = Model.hotelReviewTips.data.result.FirstOrDefault().author.countrycode.ToLowerInvariant();
+    var hotelDesc = Model?.hotelDescriptionAndInfo?.data?.FirstOrDefault(x => x.languagecode == "tr")?.description
+                 ?? Model?.hotelDescriptionAndInfo?.data?.FirstOrDefault()?.description;
+
+    var rawCode = Model?.hotelReviewTips?.data?.result?.FirstOrDefault()?.author?.countrycode;
+    var countryCode = rawCode?.Trim().ToLowerInvariant();
+
     var language = countryCode switch
     {
         "tr" => "Türkçe",
