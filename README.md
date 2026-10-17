@@ -5,7 +5,6 @@ Booking.com API'sini kullanarak kolay ve hızlı bir şekilde otel araması yapa
 ## 📋 İçerik
 
 - [Proje Özellikleri](#-proje-özellikleri)
-- [Teknoloji Yığını](#-teknoloji-yığını)
 - [Kurulum ve Başlangıç](#-kurulum-ve-başlangıç)
 - [Proje Yapısı](#-proje-yapısı)
 - [Özellikler](#-özellikler)
@@ -121,7 +120,6 @@ RapidApiHotel.Web/
 ## 🎯 Özellikler
 
 ### 1. Otel Arama
-![Otel Arama]
 
 Kullanıcılar aşağıdaki parametrelerle otel araması yapabilirler:
 - 🔍 **Şehir Adı**: Aranacak şehrin adı
@@ -133,7 +131,6 @@ Kullanıcılar aşağıdaki parametrelerle otel araması yapabilirler:
 - 💱 **Döviz Kodu**: Fiyatlarının ne para biriminde gösterileceği
 
 ### 2. Arama Sonuçları
-![Arama Sonuçları]
 
 Arama sonuçları sayfasında:
 - Belirlenen kriterlere uygun tüm oteller listelenir
@@ -142,7 +139,6 @@ Arama sonuçları sayfasında:
 - Sayfalama ile çok sayıda otel arasında kolayca gezinebilirsiniz
 
 ### 3. Otel Detayları
-![Otel Detayları]
 
 Otel detay sayfasında:
 - 🏨 **Otel Bilgileri**: Otel adı, konumu, puanı ve genel bilgiler
@@ -154,7 +150,6 @@ Otel detay sayfasında:
 - 💰 **Fiyat Detayları**: Odaların günlü fiyatları ve toplam maliyeti
 
 ### 4. Oda Mevcudiyeti
-![Oda Mevcudiyeti]
 
 Oda listesinde:
 - Oda tipi ve kapasitesi gösterilir
@@ -163,7 +158,6 @@ Oda listesinde:
 - Oda özelliklerini detaylı olarak görebilirsiniz
 
 ### 5. Yorum ve Puanlar
-![Yorum ve Puanlar]
 
 Misafirlerin deneyimleri:
 - İmajlaşan misafir yorumları ve deneyimleri
